@@ -310,3 +310,4 @@ C:\Users\HP\source\repos\CRM\crm\bin\Debug\net8.0\Microsoft.AspNetCore.Authentic
 C:\Users\HP\source\repos\CRM\crm\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.MicrosoftAccount.dll
 C:\Users\HP\source\repos\CRM\crm\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Facebook.dll
 C:\Users\HP\source\repos\CRM\crm\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll
+C:\Users\HP\source\repos\CRM\crm\obj\Debug\net8.0\CRM.sourcelink.json
