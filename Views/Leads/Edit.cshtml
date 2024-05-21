@@ -1,0 +1,61 @@
+﻿@model CRM.Models.Lead
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0 text-center">Edit Lead</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="LeadID" />
+
+                        <div class="form-group">
+                            <label asp-for="ClientID" class="font-weight-bold">Client ID</label>
+                            <input id="ClientID" name="ClientID" class="form-control" value="@ViewBag.ClientID" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LeadName" class="font-weight-bold">Lead Name</label>
+                            <input asp-for="LeadName" class="form-control" />
+                            <span asp-validation-for="LeadName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LeadDate" class="font-weight-bold">Lead Date</label>
+                            <input asp-for="LeadDate" class="form-control" />
+                            <span asp-validation-for="LeadDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LeadDescription" class="font-weight-bold">Lead Description</label>
+                            <input asp-for="LeadDescription" class="form-control" />
+                            <span asp-validation-for="LeadDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LeadStageID" class="font-weight-bold">Lead Stage</label>
+                            <select asp-for="LeadStageID" class="form-control" asp-items="ViewBag.LeadStageID"></select>
+                            <span asp-validation-for="LeadStageID" class="text-danger"></span>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3 text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

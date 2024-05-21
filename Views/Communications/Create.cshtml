@@ -1,0 +1,45 @@
+﻿@model CRM.Models.Communication
+
+@{
+    ViewData["Title"] = "Create Communication";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0 text-center">Create Communication</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group mb-4">
+                            <label asp-for="Details" class="font-weight-bold">Details</label>
+                            <input asp-for="Details" class="form-control" />
+                            <span asp-validation-for="Details" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label asp-for="LeadID" class="font-weight-bold">Lead ID</label>
+                            <input id="LeadID" name="LeadID" class="form-control" value="@ViewBag.LeadID" readonly />
+                        </div>
+                        <div class="form-group mb-4">
+                            <label asp-for="Date" class="font-weight-bold">Date</label>
+                            <input asp-for="Date" class="form-control" />
+                            <span asp-validation-for="Date" class="text-danger"></span>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

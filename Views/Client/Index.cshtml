@@ -1,0 +1,395 @@
+﻿@model IEnumerable<CRM.Models.Client>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    .custom-alert {
+        padding: 20px;
+        background-color: #f44336; /* Red */
+        color: white;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #f44336;
+        position: relative;
+    }
+
+        .custom-alert .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            .custom-alert .closebtn:hover {
+                color: black;
+            }
+</style>
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="custom-alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        @TempData["AlertMessage"]
+    </div>
+}
+
+<div class="text-right mt-3">
+    <a href="@Url.Action("ExportToPdf", "Client")" class="btn btn-primary">Export to PDF</a>
+</div>
+
+<table id="myTable" class="table table-bordered table-striped">
+    <thead class="bg-black text-white">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.ClientID)</th>
+            <th>@Html.DisplayNameFor(model => model.ClientName)</th>
+            <th>@Html.DisplayNameFor(model => model.Date)</th>
+            <th>@Html.DisplayNameFor(model => model.Subject)</th>
+            <th>@Html.DisplayNameFor(model => model.OrganizationName)</th>
+            <th>@Html.DisplayNameFor(model => model.MobileNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.Email)</th>
+            <th>@Html.DisplayNameFor(model => model.Source)</th>
+            <th>@Html.DisplayNameFor(model => model.ClientStatus)</th>
+            <th>Client Operations</th>
+            <th>Client Address</th>
+            <th>Client Finance</th>
+            <th>Add Deal</th>
+            <th>Lead Followup</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="client">
+                <td>@Html.DisplayFor(modelItem => item.ClientID)</td>
+                <td>@Html.DisplayFor(modelItem => item.ClientName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                <td>@Html.DisplayFor(modelItem => item.Subject)</td>
+                <td>@Html.DisplayFor(modelItem => item.OrganizationName)</td>
+                <td>@Html.DisplayFor(modelItem => item.MobileNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.Source.SourceName)</td>
+                <td>@Html.DisplayFor(modelItem => item.ClientStatus.StageName)</td>
+                <td class="cd">
+                    <div class="d-flex justify-content-center">
+                        <a asp-controller="Client" asp-action="Edit" asp-route-id="@item.ClientID" class="btn btn-sm w-20 h-20" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a asp-controller="Client" asp-action="Details" asp-route-id="@item.ClientID" class="btn btn-sm" title="Details">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        <a asp-controller="Client" asp-action="Delete" asp-route-id="@item.ClientID" class="btn btn-sm" title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </td>
+                <td class="ad">
+                    <div class="d-flex justify-content-center">
+                        @if (item.Address != null)
+                        {
+                            <a asp-controller="Addresses" asp-action="Edit" asp-route-id="@item.Address.AddressID" class="btn btn-sm" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-controller="Addresses" asp-action="Details" asp-route-id="@item.Address.AddressID" class="btn btn-sm" title="Details">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                            <a asp-controller="Addresses" asp-action="Delete" asp-route-id="@item.Address.AddressID" class="btn btn-sm" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="javascript:void(0);" class="btn btn-sm" title="Add" onclick="openAddressModal(@item.ClientID)">
+                                <i class="fas fa-plus-circle"></i>
+                            </a>
+                        }
+                    </div>
+                </td>
+                <td class="fd">
+                    <div class="d-flex justify-content-center">
+                        @if (item.FinancialDetails != null)
+                        {
+                            <a asp-controller="FinancialDetails" asp-action="Edit" asp-route-id="@item.FinancialDetails.FID" class="btn btn-sm" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-controller="FinancialDetails" asp-action="Delete" asp-route-id="@item.FinancialDetails.FID" class="btn btn-sm" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                            <a asp-controller="FinancialDetails" asp-action="Details" asp-route-id="@item.FinancialDetails.FID" class="btn btn-sm" title="Details">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="javascript:void(0);" class="btn btn-sm" title="Add" onclick="openFinancialDetailsModal(@item.ClientID)">
+                                <i class="fas fa-plus-circle"></i>
+                            </a>
+                        }
+                    </div>
+                </td>
+                <td class="deals">
+                    <div class="d-flex justify-content-center">
+                        @if (item.Deal != null)
+                        {
+                            <a asp-controller="Deals" asp-action="Edit" asp-route-id="@item.Deal.deal_id" class="btn btn-sm" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-controller="Deals" asp-action="Delete" asp-route-id="@item.Deal.deal_id" class="btn btn-sm" title="Delete">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                            <a asp-controller="Deals" asp-action="Details" asp-route-id="@item.Deal.deal_id" class="btn btn-sm" title="Details">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="javascript:void(0);" class="btn btn-sm" title="Add" onclick="openDealModal(@item.ClientID)">
+                                <i class="fas fa-plus-circle"></i>
+                            </a>
+                        }
+                    </div>
+                </td>
+                <td>
+                    <div class="d-flex justify-content-center">
+                        <a href="javascript:void(0);" class="btn btn-sm btn-success" title="Convert to Lead" onclick="openLeadModal(@item.ClientID)">
+                            <i class="fas fa-user-plus mr-1"></i> Convert to Lead
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Address Modal -->
+<div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addressModalLabel"> + Add Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Financial Details Modal -->
+<div class="modal fade" id="financialDetailsModal" tabindex="-1" aria-labelledby="financialDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="financialDetailsModalLabel"> + Add Financial Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Deal Modal -->
+<div class="modal fade" id="dealModal" tabindex="-1" aria-labelledby="dealModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dealModalLabel"> + Add Deal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Lead Modal -->
+<div class="modal fade" id="leadModal" tabindex="-1" aria-labelledby="leadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="leadModalLabel"> + Convert to Lead</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openDealModal(clientID) {
+            $.ajax({
+                url: '@Url.Action("Create", "Deals")',
+                type: 'GET',
+                data: { id: clientID },
+                success: function (data) {
+                    $('#dealModal .modal-body').html(data);
+                    $('#dealModal').modal('show');
+                },
+                error: function () {
+                    alert('Failed to load the form.');
+                }
+            });
+        }
+
+        function openAddressModal(clientID) {
+            $.ajax({
+                url: '@Url.Action("Create", "Addresses")',
+                type: 'GET',
+                data: { id: clientID },
+                success: function (data) {
+                    $('#addressModal .modal-body').html(data);
+                    $('#addressModal').modal('show');
+                },
+                error: function () {
+                    alert('Failed to load the form.');
+                }
+            });
+        }
+
+        function openFinancialDetailsModal(clientID) {
+            $.ajax({
+                url: '@Url.Action("Create", "FinancialDetails")',
+                type: 'GET',
+                data: { id: clientID },
+                success: function (data) {
+                    $('#financialDetailsModal .modal-body').html(data);
+                    $('#financialDetailsModal').modal('show');
+                },
+                error: function () {
+                    alert('Failed to load the form.');
+                }
+            });
+        }
+
+        function openLeadModal(clientID) {
+            $.ajax({
+                url: '@Url.Action("Create", "Leads")',
+                type: 'GET',
+                data: { id: clientID },
+                success: function (data) {
+                    $('#leadModal .modal-body').html(data);
+                    $('#leadModal').modal('show');
+                },
+                error: function () {
+                    alert('Failed to load the form.');
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+
+            // Handle the form submission via AJAX for deals
+            $(document).on('submit', '#dealForm', function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            $('#dealModal').modal('hide');
+                            location.reload(); // Reload the page for simplicity
+                        } else {
+                            $('#dealModal .modal-body').html(result);
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to submit the form.');
+                    }
+                });
+            });
+
+            // Handle the form submission via AJAX for addresses
+            $(document).on('submit', '#addressForm', function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            $('#addressModal').modal('hide');
+                            location.reload(); // Reload the page for simplicity
+                        } else {
+                            $('#addressModal .modal-body').html(result);
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to submit the form.');
+                    }
+                });
+            });
+
+            // Handle the form submission via AJAX for financial details
+            $(document).on('submit', '#financialDetailsForm', function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            $('#financialDetailsModal').modal('hide');
+                            location.reload(); // Reload the page for simplicity
+                        } else {
+                            $('#financialDetailsModal .modal-body').html(result);
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to submit the form.');
+                    }
+                });
+            });
+
+            // Handle the form submission via AJAX for lead conversion
+            $(document).on('submit', '#leadForm', function (e) {
+                e.preventDefault();
+
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            $('#leadModal').modal('hide');
+                            location.reload(); // Reload the page for simplicity
+                        } else {
+                            $('#leadModal .modal-body').html(result);
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to submit the form.');
+                    }
+                });
+            });
+        });
+    </script>
+}

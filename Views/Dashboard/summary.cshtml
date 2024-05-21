@@ -1,0 +1,266 @@
+﻿@{
+    Layout = null;
+    var prospectByStages = ViewBag.ProspectByStages as IEnumerable<dynamic>;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Summary</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-3d"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            min-height: 50vh; /* Use min-height instead of height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-grow: 1;
+        }
+
+        .chart-container, .details-container {
+            width: calc(33.33% - 13.33px); /* Adjust width for 3 charts */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .chart-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #0056b3;
+        }
+
+        .detail {
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto; /* Make canvas responsive */
+        }
+
+        .events {
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sales Summary</h1>
+        <div class="content">
+            <div class="chart-container">
+                <div class="chart-title">Summary Overview</div>
+                <canvas id="summaryChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Conversion Rate</div>
+                <canvas id="conversionChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-title">Prospect by Stages</div>
+                <canvas id="prospectStagesChart"></canvas>
+            </div>
+
+            <div class="details-container">
+                <div class="detail">Total Clients: @ViewBag.TotalClients</div>
+                <div class="detail">Total Deals: @ViewBag.TotalDeals</div>
+                <div class="detail">Total Leads: @ViewBag.TotalLeads</div>
+               
+                <div class="detail">Clients to Leads Conversion Rate: @ViewBag.ClientsToLeadsConversionRate%</div>
+                <div class="mt-10">
+                    <div class="detail text-green">Total Revenue: @ViewBag.RevenueGenerated INR</div>
+                    <div class="detail text-red">Pending Amount: @ViewBag.AmountPending INR</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="events">
+        <h1>UPCOMING EVENTS</h1>
+        <!-- Add event details here -->
+    </div>
+
+    <script>
+        // Pie chart for summary
+        var ctxSummary = document.getElementById('summaryChart').getContext('2d');
+        var summaryChart = new Chart(ctxSummary, {
+            type: 'pie',
+            data: {
+                labels: ['Total Clients', 'Total Deals', 'Total Leads', 'Total Revenue', 'Pending Amount'],
+                datasets: [{
+                    label: 'Summary',
+                    data: [@ViewBag.TotalClients, @ViewBag.TotalDeals, @ViewBag.TotalLeads, @ViewBag.RevenueGenerated, @ViewBag.AmountPending],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.8)', // Total Clients
+                        'rgba(255, 99, 132, 0.8)', // Total Deals
+                        'rgba(255, 206, 86, 0.8)', // Total Leads
+                        'rgba(78, 192, 192, 0.8)', // Total Revenue
+                        'rgba(153, 102, 255, 0.8)' // Pending Amount
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed.toLocaleString();
+                                }
+                                return label;
+                            }
+                        }
+                    },
+                    '3d': {
+                        enabled: true,
+                        effect: '3d',
+                        depth: 10,
+                        light: {
+                            ambient: 0.8,
+                            diffuse: 0.7
+                        }
+                    }
+                }
+            }
+        });
+
+        // Bar chart for conversion rate
+        var ctxConversion = document.getElementById('conversionChart').getContext('2d');
+        var conversionChart = new Chart(ctxConversion, {
+            type: 'bar',
+            data: {
+                labels: ['Clients to Leads Conversion Rate'],
+                datasets: [{
+                    label: 'Conversion Rate',
+                    data: [@ViewBag.ClientsToLeadsConversionRate],
+                    backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function (value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    '3d': {
+                        enabled: true,
+                        effect: '3d',
+                        depth: 10,
+                        light: {
+                            ambient: 0.8,
+                            diffuse: 0.7
+                        }
+                    }
+                }
+            }
+        });
+
+        // Donut chart for prospect by stages with dark color shades
+        var ctxProspectStages = document.getElementById('prospectStagesChart').getContext('2d');
+        var prospectStagesChart = new Chart(ctxProspectStages, {
+            type: 'doughnut',
+            data: {
+                labels: @Html.Raw(Json.Serialize(prospectByStages.Select(p => p.Status))),
+                datasets: [{
+                    label: 'Prospect by Stages',
+                    data: @Html.Raw(Json.Serialize(prospectByStages.Select(p => p.Count))),
+                    backgroundColor: [
+                        'rgba(153, 51, 102, 0.8)',  // Darker shade of purple
+                        'rgba(51, 102, 204, 0.8)',  // Darker shade of blue
+                        'rgba(255, 153, 51, 0.8)',  // Darker shade of orange
+                        'rgba(0, 153, 153, 0.8)',   // Darker shade of teal
+                        'rgba(102, 0, 204, 0.8)',   // Darker shade of violet
+                        'rgba(204, 102, 51, 0.8)'   // Darker shade of brown
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed.toLocaleString();
+                                }
+                                return label;
+                            }
+                        }
+                    },
+                    '3d': {
+                        enabled: true,
+                        effect: '3d',
+                        depth: 30,
+                        light: {
+                            ambient: 0.8,
+                            diffuse: 0.7
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

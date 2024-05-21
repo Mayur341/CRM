@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CRM.Models.FinancialDetails>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table  id="myTable" class="table table-bordered table-striped">
+    <thead class="bg-black text-white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AnnualIncome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IncomeSource)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Occupation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnnualIncome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IncomeSource)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Occupation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.ClientID)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.FID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+
+        });
+    </script>
+}

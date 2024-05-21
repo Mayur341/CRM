@@ -1,0 +1,89 @@
+﻿@model IEnumerable<CRM.Models.Deal>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.deal_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.deal_description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.deal_date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total_Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.amount_received)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pending_amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.closing_date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.product_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.deal_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.deal_description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.deal_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total_Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.amount_received)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pending_amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.closing_date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.product_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.ClientID)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.deal_id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.deal_id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.deal_id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

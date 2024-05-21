@@ -1,0 +1,73 @@
+﻿@model CRM.Models.Client
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-black text-white">
+                    <h5 class="mb-0">CLIENT DETAILS</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <table id="myTable" class="table table-bordered table-striped client">
+                            <tbody>
+                                <tr>
+                                    <th style="width: 30%">Client ID</th>
+                                    <td>@Html.DisplayFor(model => model.ClientID)</td>
+                                </tr>
+                                <tr>
+                                    <th>Client Name</th>
+                                    <td>@Html.DisplayFor(model => model.ClientName)</td>
+                                </tr>
+                                <tr>
+                                    <th>Date</th>
+                                    <td>@Html.DisplayFor(model => model.Date)</td>
+                                </tr>
+                                <tr>
+                                    <th>Subject</th>
+                                    <td>@Html.DisplayFor(model => model.Subject)</td>
+                                </tr>
+                                <tr>
+                                    <th>Organization</th>
+                                    <td>@Html.DisplayFor(model => model.OrganizationName)</td>
+                                </tr>
+                                <tr>
+                                    <th>Contact</th>
+                                    <td>@Html.DisplayFor(model => model.MobileNumber)</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>@Html.DisplayFor(model => model.Email)</td>
+                                </tr>
+                                <tr>
+                                    <th>Source</th>
+                                    <td>@Html.DisplayFor(model => model.Source.SourceName)</td>
+                                </tr>
+                                <tr>
+                                    <th>Client Status</th>
+                                    <td>@Html.DisplayFor(model => model.ClientStatus.StageName)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-action="Edit" asp-route-id="@Model?.ClientID" class="btn btn-success">Edit</a>
+                    <a asp-action="Index" class="btn btn-success">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

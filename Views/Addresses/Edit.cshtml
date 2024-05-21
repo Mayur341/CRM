@@ -1,0 +1,70 @@
+﻿@model CRM.Models.Address
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0 text-center">Edit Address</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="AddressID" />
+                        <div class="form-group">
+                            <label asp-for="ClientID" class="font-weight-bold">Client ID</label>
+                            <input id="ClientID" name="ClientID" class="form-control" value="@ViewBag.ClientID" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AddressLine1" class="font-weight-bold">Address Line 1</label>
+                            <input asp-for="AddressLine1" class="form-control" />
+                            <span asp-validation-for="AddressLine1" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AddressLine2" class="font-weight-bold">Address Line 2</label>
+                            <input asp-for="AddressLine2" class="form-control" />
+                            <span asp-validation-for="AddressLine2" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="City" class="font-weight-bold">City</label>
+                            <input asp-for="City" class="form-control" />
+                            <span asp-validation-for="City" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="State" class="font-weight-bold">State</label>
+                            <input asp-for="State" class="form-control" />
+                            <span asp-validation-for="State" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Country" class="font-weight-bold">Country</label>
+                            <input asp-for="Country" class="form-control" />
+                            <span asp-validation-for="Country" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Pincode" class="font-weight-bold">Pincode</label>
+                            <input asp-for="Pincode" class="form-control" />
+                            <span asp-validation-for="Pincode" class="text-danger"></span>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3 text-center">
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,103 @@
+﻿@model IEnumerable<CRM.Models.Lead>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Enhanced heading design -->
+<div class=" client container-fluid bg-black p-4">
+    <h1 class="text-center text-white">OUR LEADS</h1>
+</div>
+
+<table id="myTable" class="table table-bordered table-striped mt-4">
+    <thead class="bg-dark text-white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LeadName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeadDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeadDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th>
+                current_lead_stage
+            </th>
+            <th>
+                Next_stage
+            </th>
+            <th>
+                Messages
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="client">
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeadName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeadDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeadDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Client.ClientID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeadStage.LeadStageName)
+                </td>
+                <td>
+                    @{
+                        if (item.LeadStage.LeadStageID == 1)
+                        {
+                            <span>@ViewBag.leadStage2</span>
+                        }
+                        else if (item.LeadStage.LeadStageID == 2)
+                        {
+                            <span>@ViewBag.leadStage3</span>
+                        }
+                        else if (item.LeadStage.LeadStageID == 3)
+                        {
+                            <span>@ViewBag.leadStage4</span>
+                        }
+                        else
+                        {
+                            <h6>DEPLOYMENT</h6>
+                        }
+                    }
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a asp-controller="Communications" asp-action="Create" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-plus"></i> Add</a>
+                        <a asp-controller="Communications" asp-action="getById" asp-route-id="@item.LeadID" class="btn"><i class="fas fa-eye"></i> View</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-edit"></i> Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-info-circle"></i> Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-trash-alt"></i> Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}

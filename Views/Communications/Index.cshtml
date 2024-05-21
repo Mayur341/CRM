@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CRM.Models.Communication>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table id="myTable" class="table table-bordered table-hover">
+    <thead class="bg-dark text-white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Details)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lead)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="client">
+            <td>
+                @Html.DisplayFor(modelItem => item.Details)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lead.LeadID)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CommunicationID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CommunicationID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CommunicationID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+
+        });
+    </script>
+}

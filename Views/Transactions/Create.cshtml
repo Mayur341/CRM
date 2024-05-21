@@ -1,0 +1,102 @@
+﻿@model CRM.Models.Transaction
+
+@{
+    Layout = null; // Remove layout (footer and navigation bar)
+    ViewData["Title"] = "Create";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin-top: 20px; /* Adjust margin from top */
+        }
+
+        h1, h4 {
+            color: #003153; /* Prussian blue */
+            font-weight: bold;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #003153; /* Prussian blue */
+        }
+
+        .form-control {
+            border: 1px solid #ced4da;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Shadow around input fields */
+        }
+
+        .btn-primary {
+            background-color: #003153; /* Prussian blue */
+            border-color: #003153; /* Prussian blue */
+        }
+
+            .btn-primary:hover {
+                background-color: #002b48; /* Darker shade of Prussian blue */
+                border-color: #002b48; /* Darker shade of Prussian blue */
+            }
+
+        .text-danger {
+            color: red;
+        }
+    </style>
+
+       
+</head>
+<body>
+
+    <div class="container">
+        
+
+        
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Amount" class="control-label"></label>
+                        <input asp-for="Amount" class="form-control" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="deal_id" class="control-label"></label>
+                        <input id="deal_id" name="deal_id" class="form-control" value="@ViewBag.deal_id" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Transaction_Date" class="control-label"></label>
+                        <input asp-for="Transaction_Date" class="form-control" />
+                        <span asp-validation-for="Transaction_Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="add" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+        }
+
+    </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+</body>
+</html>
