@@ -66,6 +66,7 @@ namespace CRM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FID,ClientID,AnnualIncome,IncomeSource,Occupation")] FinancialDetails financialDetails)
         {
+            Console.WriteLine("creating");
             
                 _context.Add(financialDetails);
                 await _context.SaveChangesAsync();
