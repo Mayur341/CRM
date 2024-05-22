@@ -49,6 +49,7 @@ namespace CRM.Controllers
        
          public async Task<IActionResult> CreateAsync(int? id)
         {
+            Console.WriteLine("Got the deal request dashboard");
             Console.WriteLine("cline id:"+id);
 
             var client = await _context.Clients.FindAsync(id);
@@ -75,7 +76,7 @@ namespace CRM.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("deal_id,ClientID,deal_name,deal_description,deal_date,Total_Amount,amount_received,pending_amount,closing_date,description,product_name")] Deal deal)
         {
-
+            Console.WriteLine("got the deal");
             _context.Add(deal);
             await _context.SaveChangesAsync();
 
