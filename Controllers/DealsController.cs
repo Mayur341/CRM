@@ -21,6 +21,7 @@ namespace CRM.Controllers
         // GET: Deals
         public async Task<IActionResult> Index()
         {
+            Console.WriteLine("getting the deals");
             var cRMContext = _context.Deals.Include(d => d.Client);
             return View(await cRMContext.ToListAsync());
         }
