@@ -140,7 +140,6 @@ namespace CRM.Controllers
             
                 _context.Add(lead);
                 await _context.SaveChangesAsync();
-            Console.WriteLine("Leads successfully created");
                 return RedirectToAction(nameof(Index));
         
             ViewData["ClientID"] = new SelectList(_context.Clients, "ClientID", "ClientID", lead.ClientID);

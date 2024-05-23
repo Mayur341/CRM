@@ -148,6 +148,7 @@
                         }
                         else
                         {
+                            
                             <a href="javascript:void(0);" class="btn btn-sm" title="Add" onclick="openDealModal(@item.ClientID)">
                                 <i class="fas fa-plus-circle"></i>
                             </a>
@@ -156,9 +157,11 @@
                 </td>
                 <td>
                     <div class="d-flex justify-content-center">
-                        <a href="javascript:void(0);" class="btn btn-sm btn-success" title="Convert to Lead" onclick="openLeadModal(@item.ClientID)">
+
+                        <a asp-controller="Leads" asp-action="Create" asp-route-id="@item.ClientID" class="btn btn-sm bg-success text-white" title="create">
                             <i class="fas fa-user-plus mr-1"></i> Convert to Lead
                         </a>
+
                     </div>
                 </td>
             </tr>
@@ -280,21 +283,40 @@
                 }
             });
         }
+        //change
 
         function openLeadModal(clientID) {
+            // Check if a deal exists for the client
             $.ajax({
                 url: '@Url.Action("Create", "Leads")',
                 type: 'GET',
                 data: { id: clientID },
-                success: function (data) {
-                    $('#leadModal .modal-body').html(data);
-                    $('#leadModal').modal('show');
+                success: function (result) {
+                    if (result.DealExists) {
+                        // Open the lead modal only if a deal exists
+                        $('#leadModal .modal-body').html(result.View);
+                        $('#leadModal').modal('show');
+                    } else {
+                        // No deal exists, show an alert or handle it as needed
+                        alert('No deal is created for this client. Please create a deal first.');
+                    }
                 },
                 error: function () {
-                    alert('Failed to load the form.');
+                    alert('Failed to check for the deal.');
                 }
             });
         }
+
+
+
+
+
+
+
+
+
+
+
 
         $(document).ready(function () {
             $('#myTable').DataTable();
