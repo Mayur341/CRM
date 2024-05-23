@@ -95,6 +95,7 @@ namespace CRM.Controllers
         public async Task<IActionResult> CreateAsync(int? id)
         {
             //checking for deal if exists
+            Console.WriteLine("leads creation page calling ");
 
             var dealExists = await _context.Deals.AnyAsync(d => d.ClientID == id);
 
@@ -139,6 +140,7 @@ namespace CRM.Controllers
             
                 _context.Add(lead);
                 await _context.SaveChangesAsync();
+            Console.WriteLine("Leads successfully created");
                 return RedirectToAction(nameof(Index));
         
             ViewData["ClientID"] = new SelectList(_context.Clients, "ClientID", "ClientID", lead.ClientID);

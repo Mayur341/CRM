@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\source\\repos\\CRM\\crm\\CRM.csproj": {}
+    "C:\\Users\\HP\\source\\repos\\CRM\\CRM\\CRM.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\source\\repos\\CRM\\crm\\CRM.csproj": {
+    "C:\\Users\\HP\\source\\repos\\CRM\\CRM\\CRM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\source\\repos\\CRM\\crm\\CRM.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\source\\repos\\CRM\\CRM\\CRM.csproj",
         "projectName": "CRM",
-        "projectPath": "C:\\Users\\HP\\source\\repos\\CRM\\crm\\CRM.csproj",
+        "projectPath": "C:\\Users\\HP\\source\\repos\\CRM\\CRM\\CRM.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HP\\source\\repos\\CRM\\crm\\obj\\",
+        "outputPath": "C:\\Users\\HP\\source\\repos\\CRM\\CRM\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
