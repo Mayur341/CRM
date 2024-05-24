@@ -1,0 +1,53 @@
+﻿@model IEnumerable<CRM.Models.ClientActivity>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity_Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity_Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activity_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activity_Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activity_Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Activity_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.ClientID)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.clientActivityID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.clientActivityID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.clientActivityID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

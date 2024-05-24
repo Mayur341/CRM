@@ -18,6 +18,7 @@ namespace CRM.Models
         public DbSet<Source> Sources { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Deal> Deals { get; set; }
+        public DbSet<ClientActivity> ClientActivities { get; set; } // Add DbSet for Activity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,6 +41,12 @@ namespace CRM.Models
                 .HasOne(t => t.Deal)
                 .WithMany(d => d.Transactions)
                 .HasForeignKey(t => t.deal_id);
+
+            // Configure one-to-many relationship between Client and Activity
+            modelBuilder.Entity<Client>()
+                .HasMany(c => c.ClientActivity)
+                .WithOne(a => a.Client)
+                .HasForeignKey(a => a.ClientID); // Assuming Activity has a property ClientId
         }
     }
 }

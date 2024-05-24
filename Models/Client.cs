@@ -30,6 +30,9 @@ namespace CRM.Models
         public int ClientStatusID { get; set; }
 
         public virtual Address Address { get; set; }
+
+        public virtual ICollection<ClientActivity> ClientActivity { get; set; }
+
         public virtual FinancialDetails FinancialDetails { get; set; }
         public virtual ICollection<Lead> Lead { get; set; }
 

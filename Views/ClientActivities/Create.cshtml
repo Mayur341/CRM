@@ -1,0 +1,114 @@
+﻿@model CRM.Models.ClientActivity
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = null; // Remove layout (footer and navigation bar)
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin-top: 20px; /* Adjust margin from top */
+        }
+
+        h1, h4 {
+            color: #003153; /* Prussian blue */
+            font-weight: bold;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #003153; /* Prussian blue */
+        }
+
+        .form-control {
+            border: 1px solid #ced4da;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Shadow around input fields */
+        }
+
+        .btn-primary {
+            background-color: #003153; /* Prussian blue */
+            border-color: #003153; /* Prussian blue */
+        }
+
+            .btn-primary:hover {
+                background-color: #002b48; /* Darker shade of Prussian blue */
+                border-color: #002b48; /* Darker shade of Prussian blue */
+            }
+
+        .text-danger {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <hr />
+        <div class="row">
+            <div class="col-md-8">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="ClientID" class="control-label"></label>
+                        <input id="ClientID" name="ClientID" class="form-control" value="@ViewBag.ClientID" readonly />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Activity_Type" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.Activity_Type,
+                                 new SelectList(new[]
+                                 {
+                        new { Value = "Communication", Text = "Communication" },
+                        new { Value = "Event", Text = "Event" }
+                        }, "Value", "Text"),
+                                 "Select Activity Type",
+                                 new { @class = "form-control" })
+                        <span asp-validation-for="Activity_Type" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Activity_Description" class="control-label"></label>
+                        <input asp-for="Activity_Description" class="form-control" />
+                        <span asp-validation-for="Activity_Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Activity_Date" class="control-label"></label>
+                        <input asp-for="Activity_Date" class="form-control" />
+                        <span asp-validation-for="Activity_Date" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+        }
+    </script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>
