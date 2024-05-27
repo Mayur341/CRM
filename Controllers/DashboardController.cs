@@ -4,6 +4,7 @@ using CRM.Models;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace CRM.Controllers
 {
@@ -16,10 +17,34 @@ namespace CRM.Controllers
             _context = context;
         }
 
+
+
+
+
+
         // GET: SALES SUMMARY 
         // GET: SALES SUMMARY 
         public async Task<IActionResult> Summary()
         {
+
+            var clientEvents = await _context.ClientActivities
+                .Include(c => c.Client)
+                .Where(c => c.Activity_Type == "event" && c.Activity_Date >= DateTime.Today)
+                .OrderBy(c => c.Activity_Date)
+                .Take(10) // Assuming you want to show only the next 5 events
+                .ToListAsync();
+
+            // Store the upcoming client events in ViewBag
+            ViewBag.ClientEvents = clientEvents;
+
+            foreach (var clientEvent in clientEvents)
+            {
+                Console.WriteLine($"Event Name: {clientEvent.Activity_Type}, Client Name: {clientEvent.Activity_Description}, Date: {clientEvent.Activity_Date}");
+            }
+
+
+
+
             // Fetch total numbers of leads, deals, and clients
             var totalClients = await _context.Clients.CountAsync();
             var totalDeals = await _context.Deals.CountAsync();

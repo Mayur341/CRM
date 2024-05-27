@@ -18,11 +18,24 @@ namespace CRM.Controllers
             _context = context;
         }
 
+        ///method for getting activity based on activity id
+
+
+       
 
 
 
-        
-        public async Task<IActionResult> ActivityById(int? id)
+
+
+
+
+
+
+
+
+
+
+        public async Task<IActionResult> ActivityByClientId(int? id)
         {
             if (id == null)
             {
@@ -38,6 +51,11 @@ namespace CRM.Controllers
         }
 
         /// customized method for getting client activities  by clientId
+
+
+
+
+
 
 
 
