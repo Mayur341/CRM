@@ -4,71 +4,145 @@
     ViewData["Title"] = "Delete";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0 text-center">DELETE CLIENT</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="myTable" class="table table-bordered table-striped client">
-                            <tbody>
-                                <tr>
-                                    <th style="width: 30%">Client Name</th>
-                                    <td>@Html.DisplayFor(model => model.ClientName)</td>
-                                </tr>
-                                <tr>
-                                    <th>Date</th>
-                                    <td>@Html.DisplayFor(model => model.Date)</td>
-                                </tr>
-                                <tr>
-                                    <th>Subject</th>
-                                    <td>@Html.DisplayFor(model => model.Subject)</td>
-                                </tr>
-                                <tr>
-                                    <th>Organization</th>
-                                    <td>@Html.DisplayFor(model => model.OrganizationName)</td>
-                                </tr>
-                                <tr>
-                                    <th>Contact</th>
-                                    <td>@Html.DisplayFor(model => model.MobileNumber)</td>
-                                </tr>
-                                <tr>
-                                    <th>Email</th>
-                                    <td>@Html.DisplayFor(model => model.Email)</td>
-                                </tr>
-                                <tr>
-                                    <th>Source</th>
-                                    <td>@Html.DisplayFor(model => model.Source.SourceID)</td>
-                                </tr>
-                                <tr>
-                                    <th>Client Status</th>
-                                    <td>@Html.DisplayFor(model => model.ClientStatus.ClientStatusID)</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin-top: 20px; /* Adjust margin from top */
+        }
 
-                <div class=" text-center mb-3">
-                    <form asp-action="Delete">
-                        <input type="hidden" asp-for="ClientID" />
-                        <button type="submit" class="btn btn-danger">Delete</button> 
-                        <a asp-action="Index" class="btn btn-success">Back to List</a>
-                    </form>
-                </div>
-            </div>
+        h1, h4, h5 {
+            color: #003153; /* Prussian blue */
+            font-weight: bold;
+        }
+
+        .form-group label, .row dt {
+            font-weight: bold;
+            color: #003153; /* Prussian blue */
+        }
+
+        .form-control, .row dd {
+            border: 1px solid #ced4da;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Shadow around input fields */
+        }
+
+        .btn-primary {
+            background-color: #003153; /* Prussian blue */
+            border-color: #003153; /* Prussian blue */
+        }
+
+            .btn-primary:hover {
+                background-color: #002b48; /* Darker shade of Prussian blue */
+                border-color: #002b48; /* Darker shade of Prussian blue */
+            }
+
+        .btn-danger {
+            background-color: #dc3545; /* Red color for delete button */
+            border-color: #dc3545;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333; /* Darker red */
+                border-color: #bd2130;
+            }
+
+        .text-danger {
+            color: red;
+        }
+
+        .actions {
+            margin-top: 20px; /* Adjust margin from top */
+        }
+
+            .actions .btn-secondary {
+                background-color: #6c757d;
+                border-color: #6c757d;
+            }
+
+                .actions .btn-secondary:hover {
+                    background-color: #5a6268;
+                    border-color: #545b62;
+                }
+
+        .mb-3 .btn {
+            margin-right: 10px; /* Add margin between buttons */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h5>Are you sure you want to delete this client?</h5>
+        <div>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ClientName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ClientName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Date)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Subject)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Subject)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.OrganizationName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.OrganizationName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.MobileNumber)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.MobileNumber)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Source)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Source.SourceName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ClientStatus)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ClientStatus.StageName)
+                </dd>
+            </dl>
         </div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="ClientID" />
+            <div class="actions d-flex">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+            </div>
+        </form>
     </div>
-</div>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('#myTable').DataTable();
-        });
-    </script>
-}
+</body>
+</html>

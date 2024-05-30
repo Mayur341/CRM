@@ -4,70 +4,172 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-black text-white">
-                    <h5 class="mb-0">CLIENT DETAILS</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin-top: 20px; /* Adjust margin from top */
+        }
 
-                        <table id="myTable" class="table table-bordered table-striped client">
-                            <tbody>
-                                <tr>
-                                    <th style="width: 30%">Client ID</th>
-                                    <td>@Html.DisplayFor(model => model.ClientID)</td>
-                                </tr>
-                                <tr>
-                                    <th>Client Name</th>
-                                    <td>@Html.DisplayFor(model => model.ClientName)</td>
-                                </tr>
-                                <tr>
-                                    <th>Date</th>
-                                    <td>@Html.DisplayFor(model => model.Date)</td>
-                                </tr>
-                                <tr>
-                                    <th>Subject</th>
-                                    <td>@Html.DisplayFor(model => model.Subject)</td>
-                                </tr>
-                                <tr>
-                                    <th>Organization</th>
-                                    <td>@Html.DisplayFor(model => model.OrganizationName)</td>
-                                </tr>
-                                <tr>
-                                    <th>Contact</th>
-                                    <td>@Html.DisplayFor(model => model.MobileNumber)</td>
-                                </tr>
-                                <tr>
-                                    <th>Email</th>
-                                    <td>@Html.DisplayFor(model => model.Email)</td>
-                                </tr>
-                                <tr>
-                                    <th>Source</th>
-                                    <td>@Html.DisplayFor(model => model.Source.SourceName)</td>
-                                </tr>
-                                <tr>
-                                    <th>Client Status</th>
-                                    <td>@Html.DisplayFor(model => model.ClientStatus.StageName)</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="card-footer text-center">
-                    <a asp-action="Edit" asp-route-id="@Model?.ClientID" class="btn btn-success">Edit</a>
-                    <a asp-action="Index" class="btn btn-success">Back to List</a>
-                </div>
-            </div>
+        h1, h4, h5 {
+            color: #003153; /* Prussian blue */
+            font-weight: bold;
+        }
+
+        .form-group label, .row dt {
+            font-weight: bold;
+            color: #003153; /* Prussian blue */
+        }
+
+        .form-control, .row dd {
+            border: 1px solid #ced4da;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Shadow around input fields */
+        }
+
+        .btn-primary {
+            background-color: #003153; /* Prussian blue */
+            border-color: #003153; /* Prussian blue */
+        }
+
+            .btn-primary:hover {
+                background-color: #002b48; /* Darker shade of Prussian blue */
+                border-color: #002b48; /* Darker shade of Prussian blue */
+            }
+
+        .btn-danger {
+            background-color: #dc3545; /* Red color for delete button */
+            border-color: #dc3545;
+        }
+
+            .btn-danger:hover {
+                background-color: #c82333; /* Darker red */
+                border-color: #bd2130;
+            }
+
+        .text-danger {
+            color: red;
+        }
+
+        .actions {
+            margin-top: 20px; /* Adjust margin from top */
+        }
+
+            .actions .btn-secondary {
+                background-color: #6c757d;
+                border-color: #6c757d;
+            }
+
+                .actions .btn-secondary:hover {
+                    background-color: #5a6268;
+                    border-color: #545b62;
+                }
+
+        .mb-3 .btn {
+            margin-right: 10px; /* Add margin between buttons */
+        }
+
+        .card-header {
+            background-color: #003153; /* Prussian blue */
+            color: white;
+        }
+
+        th {
+            font-weight: bold;
+            color: #003153; /* Prussian blue */
+        }
+
+        .table td, .table th {
+            border: 1px solid #ced4da;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+            .btn-success:hover {
+                background-color: #218838;
+                border-color: #1e7e34;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div>
+            <h5>CLIENT DETAILS</h5>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ClientID)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ClientID)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ClientName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ClientName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Date)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Date)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Subject)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Subject)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.OrganizationName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.OrganizationName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.MobileNumber)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.MobileNumber)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Source)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Source.SourceName)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ClientStatus)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ClientStatus.StageName)
+                </dd>
+            </dl>
+        </div>
+        <div class="actions d-flex">
+            <a asp-action="Edit" asp-route-id="@Model?.ClientID" class="btn btn-primary">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
         </div>
     </div>
-</div>
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $('#myTable').DataTable();
-        });
-    </script>
-}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

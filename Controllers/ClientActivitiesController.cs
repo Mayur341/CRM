@@ -42,6 +42,9 @@ namespace CRM.Controllers
                 return NotFound();
             }
 
+
+            Console.WriteLine("call accepting by client");
+
             var ClientActivity = await _context.ClientActivities
                 .Include(c => c.Client)
                 .Where(c => c.Client.ClientID == id)
