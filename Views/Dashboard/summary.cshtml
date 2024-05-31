@@ -1,5 +1,5 @@
 ﻿@{
-   
+
     var prospectByStages = ViewBag.ProspectByStages as IEnumerable<dynamic>;
 }
 <!DOCTYPE html>
@@ -9,6 +9,42 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-3d"></script>
     <style>
+        .detail {
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-title {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #0056b3;
+            font-size: 18px;
+        }
+
+        .detail-content {
+            font-size: 12px;
+        }
+
+            .detail-content p {
+                margin-bottom: 8px;
+            }
+
+            .detail-content span {
+                font-weight: bold;
+            }
+
+        .text-green {
+            color: #28a745;
+        }
+
+        .text-red {
+            color: #dc3545;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
@@ -144,16 +180,29 @@
             </div>
 
             <div class="details-container">
-                <div class="detail">Total Clients: @ViewBag.TotalClients</div>
-                <div class="detail">Total Deals: @ViewBag.TotalDeals</div>
-                <div class="detail">Total Leads: @ViewBag.TotalLeads</div>
-
-                <div class="detail">Clients to Leads Conversion Rate: @ViewBag.ClientsToLeadsConversionRate%</div>
-                <div class="mt-10">
-                    <div class="detail text-green">Total Revenue: @ViewBag.RevenueGenerated INR</div>
-                    <div class="detail text-red">Pending Amount: @ViewBag.AmountPending INR</div>
+                <div class="detail">
+                    <h4 class="detail-title">Summary</h4>
+                    <div class="detail-content">
+                        <p>TOTAL CLIENTS: <span>@ViewBag.TotalClients</span></p>
+                        <p>TOTAL DEALS: <span>@ViewBag.TotalDeals</span></p>
+                        <p>TOTAL LEADS: <span>@ViewBag.TotalLeads</span></p>
+                    </div>
+                </div>
+                <div class="detail">
+                    <h4 class="detail-title">CONVERSION RATE</h4>
+                    <div class="detail-content">
+                        <p>CLIENTS TO LEADS CONVERSION: <span>@ViewBag.ClientsToLeadsConversionRate%</span></p>
+                    </div>
+                </div>
+                <div class="detail">
+                    <h4 class="detail-title">Financials</h4>
+                    <div class="detail-content">
+                        <p>TOTAL REVENUE: <span class="text-green">@ViewBag.RevenueGenerated INR</span></p>
+                        <p>PENDING AMOUNT: <span class="text-red">@ViewBag.AmountPending INR</span></p>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -358,3 +407,14 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

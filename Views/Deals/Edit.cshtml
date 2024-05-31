@@ -1,68 +1,145 @@
-﻿ @model CRM.Models.Deal
+﻿@model CRM.Models.Deal
+
+@{
+    ViewData["Title"] = "Edit Deal";
+}
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Deal Details</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin-top: 20px; /* Adjust margin from top */
+        }
+
+        h1, h4 {
+            color: #003153; /* Prussian blue */
+            font-weight: bold;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #003153; /* Prussian blue */
+        }
+
+        .form-control {
+            border: 1px solid #ced4da;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Shadow around input fields */
+        }
+
+        .btn-primary {
+            background-color: #003153; /* Prussian blue */
+            border-color: #003153; /* Prussian blue */
+        }
+
+            .btn-primary:hover {
+                background-color: #002b48; /* Darker shade of Prussian blue */
+                border-color: #002b48; /* Darker shade of Prussian blue */
+            }
+
+        .text-danger {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Deal Details</h1>
 
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">@Model.deal_name</h5>
-                <p class="card-text">@Model.deal_description</p>
-                <p class="card-text">Deal Date: @Model.deal_date</p>
-                <p class="card-text">Total Amount: @Model.Total_Amount</p>
-                <p class="card-text">Amount Received: @Model.amount_received</p>
-                <p class="card-text">Pending Amount: @Model.pending_amount</p>
-                <p class="card-text">Closing Date: @Model.closing_date</p>
-                <p class="card-text">Description: @Model.description</p>
-                <p class="card-text">Product Name: @Model.product_name</p>
-                <p class="card-text">Client ID: @Model.Client.ClientID</p>
-            </div>
-        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-8">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="deal_id" />
 
-        <div class="mt-3">
-            <button type="button" class="btn btn-primary btn-sm" onclick="loadForm()">Add Amount</button>
-        </div>
-    </div>
+                    <div class="form-group">
+                        <label asp-for="ClientID" class="control-label">Client ID</label>
+                        <input id="ClientID" name="ClientID" class="form-control" value="@ViewBag.ClientID" readonly />
+                    </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="addAmountModal" tabindex="-1" role="dialog" aria-labelledby="addAmountModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addAmountModalLabel">Add Amount</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="formContainer">
-                    <!-- Form will be loaded here -->
-                </div>
+                    <div class="form-group">
+                        <label asp-for="deal_name" class="control-label">Deal Name</label>
+                        <input asp-for="deal_name" class="form-control" />
+                        <span asp-validation-for="deal_name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="deal_description" class="control-label">Deal Description</label>
+                        <input asp-for="deal_description" class="form-control" />
+                        <span asp-validation-for="deal_description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="deal_date" class="control-label">Deal Date</label>
+                            <input asp-for="deal_date" class="form-control" />
+                            <span asp-validation-for="deal_date" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="closing_date" class="control-label">Closing Date</label>
+                            <input asp-for="closing_date" class="form-control" />
+                            <span asp-validation-for="closing_date" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Total_Amount" class="control-label">Total Amount</label>
+                        <input asp-for="Total_Amount" class="form-control" />
+                        <span asp-validation-for="Total_Amount" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="amount_received" class="control-label">Amount Received</label>
+                        <input asp-for="amount_received" class="form-control" />
+                        <span asp-validation-for="amount_received" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="pending_amount" class="control-label">Pending Amount</label>
+                        <input asp-for="pending_amount" class="form-control" />
+                        <span asp-validation-for="pending_amount" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="description" class="control-label">Description</label>
+                        <textarea asp-for="description" class="form-control"></textarea>
+                        <span asp-validation-for="description" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="product_name" class="control-label">Product Name</label>
+                        <input asp-for="product_name" class="form-control" />
+                        <span asp-validation-for="product_name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group d-flex justify-content-center align-items-center ">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        function loadForm() {
-            $('#formContainer').load('@Url.Action("Create", "Transactions", new { id = Model?.deal_id })');
-            $('#addAmountModal').modal('show');
-        }
-
-        function submitForm() {
-            // Handle form submission here
-            $('#addAmountModal').modal('hide');
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
         }
     </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
 </body>
 </html>

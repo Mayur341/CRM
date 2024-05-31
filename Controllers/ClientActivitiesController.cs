@@ -50,6 +50,8 @@ namespace CRM.Controllers
                 .Where(c => c.Client.ClientID == id)
                 .ToListAsync();
 
+            ViewData["id"] = id;
+
             return View(ClientActivity);
         }
 
