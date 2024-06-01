@@ -9,64 +9,144 @@
 <head>
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            color: #343a40;
-            
+        /* Custom navbar styling */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Roboto', sans-serif; /* Updated font style */
         }
 
         .navbar {
-            margin-bottom: 0; /* Remove margin from the bottom of the navbar */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: #343a40;
         }
 
-
-
-
-
-        h3{
-            margin-top:0;
+        .container {
+            padding-top: 0px;
         }
 
-        h1 {
-            color: #003153; /* Prussian blue */
+        .navbar-brand {
+            color: #fff;
             font-weight: bold;
         }
 
-        .table th {
-            color: #003153; /* Prussian blue */
-            font-weight: bold;
+        .navbar-nav {
+            margin: 0 auto;
         }
 
-        .btn-primary {
-            background-color: #003153; /* Prussian blue */
-            border-color: #003153; /* Prussian blue */
-        }
-
-            .btn-primary:hover {
-                background-color: #002b48; /* Darker shade of Prussian blue */
-                border-color: #002b48; /* Darker shade of Prussian blue */
+            .navbar-nav .nav-link {
+                color: #fff;
+                text-transform: uppercase;
+                font-size: 0.9rem;
+                font-weight: normal;
+                padding: 5px 15px;
+                margin: 0 10px;
             }
 
-        .btn-secondary {
-            background-color: #6c757d;
-            border-color: #6c757d;
+        .navbar-toggler {
+            border-color: #fff;
         }
 
-            .btn-secondary:hover {
-                background-color: #5a6268;
-                border-color: #545b62;
+        .navbar-toggler-icon {
+            background-color: #fff;
+        }
+
+        html {
+            font-size: 14px;
+        }
+
+        .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+            box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+        }
+
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        .client {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-weight: 110;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            height: calc(100% - 49px); /* Adjust height to take navbar into account */
+            width: 250px;
+            position: fixed;
+            top: 49px; /* Offset to be below navbar */
+            left: 0;
+            background-color: #343a40;
+            overflow-x: hidden;
+            padding-top: 20px;
+            z-index: 1001;
+            transition: transform 0.3s ease;
+            font-family: 'Open Sans', sans-serif; /* Professional font style */
+        }
+
+            .sidebar a {
+                padding: 15px 20px;
+                text-decoration: none;
+                font-size: 1rem;
+                color: #fff;
+                display: flex;
+                align-items: center;
+                transition: background-color 0.2s ease;
+                font-weight: 600; /* Semi-bold text */
+                margin-bottom: 10px; /* Increase space between items */
             }
 
-       <!-- .actions a {
-            margin-right: 5px;
-        } -->
+                .sidebar a i {
+                    margin-right: 10px;
+                }
 
-        
+                .sidebar a:hover {
+                    background-color: #575d63;
+                }
 
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+            margin-top: 50px;
+        }
+
+        .toggle-icon {
+            display: block;
+            font-size: 1.5rem;
+            color: black;
+            cursor: pointer;
+            position: absolute;
+            top: 59px; /* Adjust top to be below navbar */
+            left: 260px; /* Adjust left to be outside sidebar */
+            z-index: 1002;
+            transition: left 0.3s ease; /* Smooth transition */
+        }
+
+        .sidebar.closed {
+            transform: translateX(-100%);
+        }
+
+        .main-content.closed {
+            margin-left: 0;
+        }
+
+        .toggle-icon.closed {
+            left: 10px; /* Adjust to the left when sidebar is closed */
+        }
+
+        /* Media Queries for responsive design */
 
     </style>
+     
 </head>
 <body>
     <div class="container">

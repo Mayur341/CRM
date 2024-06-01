@@ -1,0 +1,47 @@
+
+
+/* Media Queries for responsive design */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%); /* Hide sidebar by default */
+    }
+
+        .sidebar.active {
+            transform: translateX(0); /* Show sidebar when active */
+        }
+
+    .main-content {
+        margin-left: 0; /* Full-width content */
+    }
+
+        .main-content.active {
+            margin-left: 250px; /* Push content when sidebar is active */
+        }
+
+    .navbar-toggler {
+        display: block; /* Show navbar toggler */
+    }
+}
+
+@media (min-width: 769px) {
+    .sidebar {
+        transform: translateX(0); /* Show sidebar by default */
+    }
+
+        .sidebar.active {
+            transform: translateX(-250px); /* Hide sidebar when active */
+        }
+
+    .main-content {
+        margin-left: 250px; /* Same as the width of the sidebar */
+    }
+
+        .main-content.active {
+            margin-left: 0; /* Full-width content when sidebar is hidden */
+        }
+
+    .navbar-toggler {
+        display: none; /* Hide navbar toggler */
+    }
+}
+

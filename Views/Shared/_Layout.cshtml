@@ -7,61 +7,60 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css" />
-    <link rel="stylesheet" href="~/CRM.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* Custom navbar styling */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
-            height:25px;
+            height: 100%;
+            font-family: 'Roboto', sans-serif; /* Updated font style */
         }
 
         .navbar {
-            position: relative;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000; /* Ensure navbar stays above other content */
-            background-color: #343a40; /* Dark gray background */
-            
+            z-index: 1000;
+            background-color: #343a40;
         }
 
         .container {
-            padding-top: 0px; /* Adjust padding to accommodate fixed navbar */
+            padding-top: 0px;
         }
 
-
         .navbar-brand {
-            color: #fff; /* White text */
+            color: #fff;
             font-weight: bold;
         }
 
         .navbar-nav {
-            margin: 0 auto; /* Center the navbar items */
+            margin: 0 auto;
         }
 
-        .navbar-nav .nav-link {
-            color: #fff; /* White text */
-            text-transform: uppercase; /* Uppercase text */
-            font-size: 0.9rem; /* Smaller font size */
-            font-weight: normal; /* Remove boldness */
-            padding: 5px 15px; /* Decrease padding to reduce height */
-            margin: 0 10px; /* Increase space between items */
-        }
+            .navbar-nav .nav-link {
+                color: #fff;
+                text-transform: uppercase;
+                font-size: 0.9rem;
+                font-weight: normal;
+                padding: 5px 15px;
+                margin: 0 10px;
+            }
 
         .navbar-toggler {
-            border-color: #fff; /* White border */
+            border-color: #fff;
         }
 
         .navbar-toggler-icon {
-            background-color: #fff; /* White toggler icon */
+            background-color: #fff;
         }
+
         html {
             font-size: 14px;
         }
-
 
         .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
             box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
@@ -72,12 +71,83 @@
             min-height: 100%;
         }
 
-        
-
         .client {
             font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
             font-weight: 110;
         }
+
+        /* Sidebar styling */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            top: 49px;
+            left: 0;
+            background-color: #343a40;
+            overflow-x: hidden;
+            padding-top: 20px;
+            z-index: 1001;
+            transition: transform 0.3s ease;
+            font-family: 'Open Sans', sans-serif; /* Professional font style */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+            .sidebar a {
+                padding: 15px 20px;
+                text-decoration: none;
+                font-size: 1rem;
+                color: #fff;
+                display: flex;
+                flex-direction: column; /* Stack icon and text vertically */
+                align-items: center; /* Center them */
+                transition: background-color 0.2s ease;
+                font-weight: 600; /* Semi-bold text */
+                margin-bottom: 20px; /* Increase space between items */
+                width: 100%; /* Full width for easier centering */
+            }
+
+                .sidebar a i {
+                    margin-bottom: 5px; /* Space between icon and text */
+                }
+
+                .sidebar a:hover {
+                    background-color: #575d63;
+                }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+            margin-top: 50px;
+        }
+
+        .toggle-icon {
+            display: block;
+            font-size: 1.5rem;
+            color: black;
+            cursor: pointer;
+            position: absolute;
+            top: 59px; /* Adjust top to be below navbar */
+            left: 260px; /* Adjust left to be outside sidebar */
+            z-index: 1002;
+            transition: left 0.3s ease; /* Smooth transition */
+        }
+
+        .sidebar.closed {
+            transform: translateX(-100%);
+        }
+
+        .main-content.closed {
+            margin-left: 0;
+        }
+
+        .toggle-icon.closed {
+            left: 10px; /* Adjust to the left when sidebar is closed */
+        }
+
+        /* Media Queries for responsive design */
     </style>
 </head>
 <body>
@@ -111,16 +181,39 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+    <div class="sidebar" id="sidebar">
+        <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="#"><i class="fas fa-users"></i> Clients</a>
+        <a href="#"><i class="fas fa-handshake"></i> Deals</a>
+        <a href="#"><i class="fas fa-chart-line"></i> Leads</a>
     </div>
+
+    <div class="main-content" id="main-content">
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <i class="fas fa-bars toggle-icon" id="toggle-icon" onclick="toggleSidebar()"></i>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById("sidebar");
+            var mainContent = document.getElementById("main-content");
+            var toggleIcon = document.getElementById("toggle-icon");
+
+            sidebar.classList.toggle("closed");
+            mainContent.classList.toggle("closed");
+            toggleIcon.classList.toggle("closed");
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
