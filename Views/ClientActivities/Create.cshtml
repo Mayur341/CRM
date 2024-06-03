@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = null; // Remove layout (footer and navigation bar)
+    
 }
 
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
             font-family: 'Arial', sans-serif;
             background-color: #f8f9fa;
             color: #343a40;
-            margin-top: 20px; /* Adjust margin from top */
+            
         }
 
         h1, h4 {
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="Activity_Type" class="control-label"></label>
+                        <label asp-for="Activity_Type" class="control-label">Activity Type</label>
                         @Html.DropDownListFor(model => model.Activity_Type,
                                  new SelectList(new[]
                                  {
@@ -77,13 +77,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="Activity_Description" class="control-label"></label>
+                        <label asp-for="Activity_Description" class="control-label">Activity Description</label>
                         <input asp-for="Activity_Description" class="form-control" />
                         <span asp-validation-for="Activity_Description" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
-                        <label asp-for="Activity_Date" class="control-label"></label>
+                        <label asp-for="Activity_Date" class="control-label">Activity Date</label>
                         <input asp-for="Activity_Date" class="form-control" />
                         <span asp-validation-for="Activity_Date" class="text-danger"></span>
                     </div>

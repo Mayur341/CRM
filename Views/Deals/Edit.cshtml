@@ -14,7 +14,6 @@
             font-family: 'Arial', sans-serif;
             background-color: #f8f9fa;
             color: #343a40;
-            
         }
 
         h1, h4 {
@@ -51,17 +50,13 @@
 
     <div class="container">
 
-        
+
         <div class="row">
             <div class="col-md-8">
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="deal_id" />
-
-                    <div class="form-group">
-                        <label asp-for="ClientID" class="control-label">Client ID</label>
-                        <input id="ClientID" name="ClientID" class="form-control" value="@ViewBag.ClientID" readonly />
-                    </div>
+                    <input type="hidden" id="ClientID" name="ClientID" value="@ViewBag.ClientID" />
 
                     <div class="form-group">
                         <label asp-for="deal_name" class="control-label">Deal Name</label>

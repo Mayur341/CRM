@@ -96,7 +96,7 @@
                 </td>
                 <td class="ca">
 
-                    <a href="javascript:void(0);" class="btn btn-sm w-20 h-20" title="Activity By ID" onclick="openActivityByIdModal(@item.ClientID)">
+                    <a asp-controller="ClientActivities"  asp-action="Create" asp-route-id="@item.ClientID" class="btn btn-sm w-20 h-20" title="Activity By ID">
                         <i class="fas fa-plus"></i>
                     </a>
 
@@ -123,7 +123,7 @@
                         }
                         else
                         {
-                            <a href="javascript:void(0);" class="btn btn-sm" title="Add" onclick="openAddressModal(@item.ClientID)">
+                            <a asp-controller="Addresses" asp-action="Create" asp-route-id="@item.ClientID" class="btn btn-sm" title="Add">
                                 <i class="fas fa-plus-circle"></i>
                             </a>
                         }
@@ -145,7 +145,7 @@
                         }
                         else
                         {
-                            <a href="javascript:void(0);" class="btn btn-sm" title="Add" onclick="openFinancialDetailsModal(@item.ClientID)">
+                            <a asp-controller="FinancialDetails" asp-action="Create"  asp-route-id="@item.ClientID"  class="btn btn-sm" title="Add">
                                 <i class="fas fa-plus-circle"></i>
                             </a>
                         }
@@ -168,7 +168,7 @@
                         else
                         {
                             
-                            <a href="javascript:void(0);" class="btn btn-sm" title="Add" onclick="openDealModal(@item.ClientID)">
+                            <a asp-controller="Deals" asp-action="Create"  asp-route-id="@item.ClientID" class="btn btn-sm" title="Add">
                                 <i class="fas fa-plus-circle"></i>
                             </a>
                         }
