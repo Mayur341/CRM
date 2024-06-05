@@ -54,64 +54,82 @@
             margin-top: 20px;
         }
 
-        .mt-3 {
-            margin-top: 10px;
+        /* Custom styles */
+        .form-row {
+            margin-bottom: 20px; /* Increase the gap between rows */
+        }
+
+        .form-group {
+            margin-bottom: 10px; /* Increase the gap between input fields */
         }
     </style>
 </head>
 <body>
-
-    <div class="container mt-5">
+    <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-header text-center">
-                        <h5 class="mb-0">Edit Client</h5>
-                    </div>
+            <div class="col-md-20">
+                <div class="card shadow-sm" style="width: 90%;">
                     <div class="card-body">
                         <form asp-action="Edit">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="ClientID" />
-                            <div class="form-group">
-                                <label asp-for="ClientName">Name</label>
-                                <input asp-for="ClientName" class="form-control" />
-                                <span asp-validation-for="ClientName" class="text-danger"></span>
+
+                            <!-- First row -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="ClientName">Client Name</label>
+                                    <input asp-for="ClientName" class="form-control" />
+                                    <span asp-validation-for="ClientName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="Date">Date</label>
+                                    <input asp-for="Date" class="form-control" />
+                                    <span asp-validation-for="Date" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Date">Date</label>
-                                <input asp-for="Date" class="form-control" />
-                                <span asp-validation-for="Date" class="text-danger"></span>
+
+                            <!-- Second row -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="Subject">Subject</label>
+                                    <input asp-for="Subject" class="form-control" />
+                                    <span asp-validation-for="Subject" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="OrganizationName">Organization</label>
+                                    <input asp-for="OrganizationName" class="form-control" />
+                                    <span asp-validation-for="OrganizationName" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="Subject">Subject</label>
-                                <input asp-for="Subject" class="form-control" />
-                                <span asp-validation-for="Subject" class="text-danger"></span>
+
+                            <!-- Third row -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="MobileNumber">Contact</label>
+                                    <input asp-for="MobileNumber" class="form-control" />
+                                    <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="Email">Email</label>
+                                    <input asp-for="Email" class="form-control" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="OrganizationName">Organization</label>
-                                <input asp-for="OrganizationName" class="form-control" />
-                                <span asp-validation-for="OrganizationName" class="text-danger"></span>
+
+                            <!-- Fourth row -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="ClientStatusID">Client Status</label>
+                                    <select asp-for="ClientStatusID" class="form-control" asp-items="ViewBag.ClientStatusID"></select>
+                                    <span asp-validation-for="ClientStatusID" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="SourceID">Source</label>
+                                    <select asp-for="SourceID" class="form-control" asp-items="ViewBag.SourceID"></select>
+                                    <span asp-validation-for="SourceID" class="text-danger"></span>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label asp-for="MobileNumber">Contact</label>
-                                <input asp-for="MobileNumber" class="form-control" />
-                                <span asp-validation-for="MobileNumber" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Email">Email</label>
-                                <input asp-for="Email" class="form-control" />
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="ClientStatusID">Client Status</label>
-                                <select asp-for="ClientStatusID" class="form-control" asp-items="ViewBag.ClientStatusID"></select>
-                                <span asp-validation-for="ClientStatusID" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="SourceID">Source</label>
-                                <select asp-for="SourceID" class="form-control" asp-items="ViewBag.SourceID"></select>
-                                <span asp-validation-for="SourceID" class="text-danger"></span>
-                            </div>
+
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>
@@ -121,6 +139,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="mt-3 text-center">
         <a asp-action="Index">Back to List</a>
@@ -133,3 +152,4 @@
 
 </body>
 </html>
+

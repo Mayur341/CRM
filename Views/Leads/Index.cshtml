@@ -4,102 +4,371 @@
     ViewData["Title"] = "Index";
 }
 
-<!-- Enhanced heading design -->
-<div style="text-align: center; margin-bottom: 20px;">
-    <h3 style="font-family: Arial, sans-serif; font-size: 28px; font-weight: bold; color: #333;">
-        OUR&nbsp;&nbsp;LEADS
-    </h3>
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="custom-alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        @TempData["AlertMessage"]
+    </div>
+}
+<style>
+    .table td {
+        padding: 4px;
+    }
+
+    body {
+        background: radial-gradient(rgba(0, 0, 0, 0.2), transparent);
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+
+    .text-black {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        color: black;
+    }
+
+    .table th {
+        font-family: Arial, sans-serif !important;
+        font-size: 12px !important;
+        font-weight: bold !important;
+        color: black !important;
+    }
+
+    .table td {
+        font-family: Arial, sans-serif !important;
+        font-size: 12px !important;
+        color: black !important;
+    }
+
+    .table-container {
+        margin-top: 0;
+        background-color: whitesmoke;
+        padding: 20px;
+        border-radius: 13px;
+        width: 100%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+</style>
+
+
+
+<div class="table-container">
+    <div class="table-responsive">
+        <table id="myTable" class="table">
+            <thead class="text-black">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.LeadName)</th>
+                    <th>@Html.DisplayNameFor(model => model.LeadDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.LeadDescription)</th>
+                    <th>@Html.DisplayNameFor(model => model.Client)</th>
+                    <th>current_lead_stage</th>
+                    <th>Next_stage</th>
+                    <th>Messages</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="client">
+                        <td>@Html.DisplayFor(modelItem => item.LeadName)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LeadDate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LeadDescription)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Client.ClientID)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LeadStage.LeadStageName)</td>
+                        <td>
+                            @{
+                                if (item.LeadStage.LeadStageID == 1)
+                                {
+                                    <span>@ViewBag.leadStage2</span>
+                                }
+                                else if (item.LeadStage.LeadStageID == 2)
+                                {
+                                    <span>@ViewBag.leadStage3</span>
+                                }
+                                else if (item.LeadStage.LeadStageID == 3)
+                                {
+                                    <span>@ViewBag.leadStage4</span>
+                                }
+                                else
+                                {
+                                    <h6>DEPLOYMENT</h6>
+                                }
+                            }
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-controller="Communications" asp-action="Create" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-plus"></i> Add</a>
+                                <a asp-controller="Communications" asp-action="getById" asp-route-id="@item.LeadID" class="btn"><i class="fas fa-eye"></i> View</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Edit" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-edit"></i> Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-info-circle"></i> Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-trash-alt"></i> Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
-<table id="myTable" class="table table-bordered table-striped mt-4">
-    <thead class="bg-dark text-white">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.LeadName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LeadDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LeadDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Client)
-            </th>
-            <th>
-                current_lead_stage
-            </th>
-            <th>
-                Next_stage
-            </th>
-            <th>
-                Messages
-            </th>
-            <th>
-                Action
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr class="client">
-                <td>
-                    @Html.DisplayFor(modelItem => item.LeadName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LeadDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LeadDescription)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Client.ClientID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LeadStage.LeadStageName)
-                </td>
-                <td>
-                    @{
-                        if (item.LeadStage.LeadStageID == 1)
-                        {
-                            <span>@ViewBag.leadStage2</span>
-                        }
-                        else if (item.LeadStage.LeadStageID == 2)
-                        {
-                            <span>@ViewBag.leadStage3</span>
-                        }
-                        else if (item.LeadStage.LeadStageID == 3)
-                        {
-                            <span>@ViewBag.leadStage4</span>
-                        }
-                        else
-                        {
-                            <h6>DEPLOYMENT</h6>
-                        }
-                    }
-                </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a asp-controller="Communications" asp-action="Create" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-plus"></i> Add</a>
-                        <a asp-controller="Communications" asp-action="getById" asp-route-id="@item.LeadID" class="btn"><i class="fas fa-eye"></i> View</a>
-                    </div>
-                </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a asp-action="Edit" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-edit"></i> Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-info-circle"></i> Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.LeadID" class="btn "><i class="fas fa-trash-alt"></i> Delete</a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<!-- Modals -->
+<div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addressModalLabel"> + Add Address</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="activityByIdModal" tabindex="-1" aria-labelledby="activityByIdModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activityByIdModalLabel"> + Activity By ID</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="financialDetailsModal" tabindex="-1" aria-labelledby="financialDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="financialDetailsModalLabel"> + Add Financial Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="dealModal" tabindex="-1" aria-labelledby="dealModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dealModalLabel"> + Add Deal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="leadModal" tabindex="-1" aria-labelledby="leadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="leadModalLabel"> + Convert to Lead</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
+        function openDealModal(clientID) {
+            $.ajax({
+                url: '@Url.Action("Create", "Deals")',
+                type: 'GET',
+                data: { id: clientID },
+                success: function (data) {
+                    $('#dealModal .modal-body').html(data);
+                    $('#dealModal').modal('show');
+                },
+                error: function () {
+                    alert('Failed to load the form.');
+                }
+            });
+        }
+
+        function openAddressModal(clientID) {
+            $.ajax({
+                url: '@Url.Action("Create", "Addresses")',
+                type: 'GET',
+                data: { id: clientID },
+                success: function (data) {
+                    $('#addressModal .modal-body').html(data);
+                    $('#addressModal').modal('show');
+                },
+                error: function () {
+                    alert('Failed to load the form.');
+                }
+            });
+        }
+
+        function openActivityByIdModal(clientID) {
+            $.ajax({
+                url: '@Url.Action("Create", "ClientActivities")',
+                type: 'GET',
+                data: { id: clientID },
+                success: function (data) {
+                    $('#activityByIdModal .modal-body').html(data);
+                    $('#activityByIdModal').modal('show');
+                },
+                error: function () {
+                    alert('Failed to load the form.');
+                }
+            });
+        }
+
+        function openFinancialDetailsModal(clientID) {
+            $.ajax({
+                url: '@Url.Action("Create", "FinancialDetails")',
+                type: 'GET',
+                data: { id: clientID },
+                success: function (data) {
+                    $('#financialDetailsModal .modal-body').html(data);
+                    $('#financialDetailsModal').modal('show');
+                },
+                error: function () {
+                    alert('Failed to load the form.');
+                }
+            });
+        }
+
+        function openLeadModal(clientID) {
+            $.ajax({
+                url: '@Url.Action("Create", "Leads")',
+                type: 'GET',
+                data: { id: clientID },
+                success: function (result) {
+                    if (result.DealExists) {
+                        $('#leadModal .modal-body').html(result.View);
+                        $('#leadModal').modal('show');
+                    } else {
+                        alert('No deal is created for this client. Please create a deal first.');
+                    }
+                },
+                error: function () {
+                    alert('Failed to check for the deal.');
+                }
+            });
+        }
+
         $(document).ready(function () {
             $('#myTable').DataTable();
+
+            $(document).on('submit', '#dealForm', function (e) {
+                e.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            $('#dealModal').modal('hide');
+                            location.reload();
+                        } else {
+                            $('#dealModal .modal-body').html(result);
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to submit the form.');
+                    }
+                });
+            });
+
+            $(document).on('submit', '#addressForm', function (e) {
+                e.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            $('#addressModal').modal('hide');
+                            location.reload();
+                        } else {
+                            $('#addressModal .modal-body').html(result);
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to submit the form.');
+                    }
+                });
+            });
+
+            $(document).on('submit', '#financialDetailsForm', function (e) {
+                e.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            $('#financialDetailsModal').modal('hide');
+                            location.reload();
+                        } else {
+                            $('#financialDetailsModal .modal-body').html(result);
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to submit the form.');
+                    }
+                });
+            });
+
+            $(document).on('submit', '#leadForm', function (e) {
+                e.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function (result) {
+                        if (result.success) {
+                            $('#leadModal').modal('hide');
+                            location.reload();
+                        } else {
+                            $('#leadModal .modal-body').html(result);
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to submit the form.');
+                    }
+                });
+            });
         });
     </script>
 }

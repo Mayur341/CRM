@@ -10,13 +10,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Custom navbar styling */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            font-family: 'Roboto', sans-serif; /* Updated font style */
+            
+        }
+
+        .main-content{
+            margin-left:0px !important;
+            left: 0px !important;
+            right : 0px !important;
         }
 
         .navbar {
@@ -25,11 +30,12 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background-color: #343a40;
+            background-color: deepskyblue;
         }
 
         .container {
-            padding-top: 0px;
+           
+            width:100%;
         }
 
         .navbar-brand {
@@ -58,9 +64,7 @@
             background-color: #fff;
         }
 
-        html {
-            font-size: 14px;
-        }
+        
 
         .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
             box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
@@ -76,23 +80,21 @@
             font-weight: 110;
         }
 
-        /* Sidebar styling */
-        .sidebar {
+     <!--   .sidebar {
             height: 100%;
             width: 250px;
             position: fixed;
             top: 49px;
             left: 0;
             background-color: #343a40;
-            overflow-x: hidden;
             padding-top: 20px;
-            z-index: 1001;
+            z-index: 1000;
             transition: transform 0.3s ease;
-            font-family: 'Open Sans', sans-serif; /* Professional font style */
+            font-family: 'Open Sans', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
+        } 
 
             .sidebar a {
                 padding: 15px 20px;
@@ -100,27 +102,54 @@
                 font-size: 1rem;
                 color: #fff;
                 display: flex;
-                flex-direction: column; /* Stack icon and text vertically */
-                align-items: center; /* Center them */
+                flex-direction: column;
+                align-items: center;
                 transition: background-color 0.2s ease;
-                font-weight: 600; /* Semi-bold text */
-                margin-bottom: 20px; /* Increase space between items */
-                width: 100%; /* Full width for easier centering */
+                font-weight: 600;
+                margin-bottom: 20px;
+                width: 100%;
             }
 
                 .sidebar a i {
-                    margin-bottom: 5px; /* Space between icon and text */
+                    margin-bottom: 5px;
                 }
 
                 .sidebar a:hover {
                     background-color: #575d63;
+                    color: lightskyblue;
                 }
+
+        .dropdown-container {
+            display: none;
+            background-color: #414a52;
+            position: absolute;
+            width: 200px; /* Adjust width as needed */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+            border-radius: 5px; /* Add rounded corners */
+            padding: 8px 0; /* Adjust padding */
+        }
+
+            .dropdown-container a {
+                font-size: 0.9rem; /* Adjust font size */
+                padding: 10px 20px; /* Adjust padding */
+                text-decoration: none;
+                color: #fff;
+                display: block;
+                transition: background-color 0.2s ease;
+            }
+
+                .dropdown-container a:hover {
+                    background-color: #575d63;
+                    color: lightskyblue;
+                }
+
 
         .main-content {
             margin-left: 250px;
             padding: 20px;
             transition: margin-left 0.3s ease;
             margin-top: 50px;
+            
         }
 
         .toggle-icon {
@@ -129,10 +158,10 @@
             color: black;
             cursor: pointer;
             position: absolute;
-            top: 59px; /* Adjust top to be below navbar */
-            left: 260px; /* Adjust left to be outside sidebar */
+            top: 59px;
+            left: 260px;
             z-index: 1002;
-            transition: left 0.3s ease; /* Smooth transition */
+            transition: left 0.3s ease;
         }
 
         .sidebar.closed {
@@ -141,18 +170,19 @@
 
         .main-content.closed {
             margin-left: 0;
+            width:100%;
         }
 
         .toggle-icon.closed {
-            left: 10px; /* Adjust to the left when sidebar is closed */
+            left: 10px;
         }
-
+        -->
         /* Media Queries for responsive design */
     </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+       <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">KukuChirpCrm</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -181,13 +211,34 @@
             </div>
         </nav>
     </header>
-
-    <div class="sidebar" id="sidebar">
-        <a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        <a href="#"><i class="fas fa-users"></i> Clients</a>
-        <a href="#"><i class="fas fa-handshake"></i> Deals</a>
-        <a href="#"><i class="fas fa-chart-line"></i> Leads</a>
+   <!-- <div class="sidebar" id="sidebar">
+        <a href="#" class="dropdown-btn"><i class="fas fa-tachometer-alt"></i> Dashboard <i class="fas fa-caret-down"></i></a>
+        <div class="dropdown-container">
+            <a href="#">Overview</a>
+            <a href="#">Stats</a>
+        </div>
+        <a href="#" class="dropdown-btn"><i class="fas fa-users"></i> Clients <i class="fas fa-caret-down"></i></a>
+        <div class="dropdown-container">
+            <a href="#">Client List</a>
+            <a href="#">Add Client</a>
+        </div>
+        <a href="#" class="dropdown-btn"><i class="fas fa-handshake"></i> Deals <i class="fas fa-caret-down"></i></a>
+        <div class="dropdown-container">
+            <a href="#">All Deals</a>
+            <a href="#">New Deal</a>
+        </div>
+        <a href="#" class="dropdown-btn"><i class="fas fa-chart-line"></i> Leads <i class="fas fa-caret-down"></i></a>
+        <div class="dropdown-container">
+            <a href="#">Lead List</a>
+            <a href="#">New Lead</a>
+        </div>
+        <a href="#" class="dropdown-btn"><i class="fas fa-cog"></i> Settings <i class="fas fa-caret-down"></i></a>
+        <div class="dropdown-container">
+            <a href="#">Profile</a>
+            <a href="#">Account</a>
+        </div>
     </div>
+    -->
 
     <div class="main-content" id="main-content">
         <div class="container">
@@ -197,7 +248,7 @@
         </div>
     </div>
 
-    <i class="fas fa-bars toggle-icon" id="toggle-icon" onclick="toggleSidebar()"></i>
+    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -212,6 +263,21 @@
             sidebar.classList.toggle("closed");
             mainContent.classList.toggle("closed");
             toggleIcon.classList.toggle("closed");
+        }
+
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
         }
     </script>
     @await RenderSectionAsync("Scripts", required: false)

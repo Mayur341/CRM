@@ -4,86 +4,120 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.deal_name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.deal_description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.deal_date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Total_Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.amount_received)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.pending_amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.closing_date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.product_name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Client)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.deal_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.deal_description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.deal_date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total_Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.amount_received)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.pending_amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.closing_date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.product_name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Client.ClientID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.deal_id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.deal_id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.deal_id">Delete</a>
-            </td>
-        </tr>
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="custom-alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        @TempData["AlertMessage"]
+    </div>
 }
-    </tbody>
-</table>
+<style>
+    .table td {
+        padding: 4px;
+    }
+
+    body {
+        background: radial-gradient(rgba(0, 0, 0, 0.2), transparent);
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+
+    .text-black {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        color: black;
+    }
+
+    .table th {
+        font-family: Arial, sans-serif !important;
+        font-size: 12px !important;
+        font-weight: bold !important;
+        color: black !important;
+    }
+
+    .table td {
+        font-family: Arial, sans-serif !important;
+        font-size: 12px !important;
+        color: black !important;
+    }
+
+    .table-container {
+        margin-top: 0;
+        background-color: whitesmoke;
+        padding: 20px;
+        border-radius: 13px;
+        width: 100%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    h3 {
+        font-family: Arial, sans-serif;
+        font-size: 28px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="table-container">
+    
+    <p>
+        <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Create New</a>
+    </p>
+    <div class="table-responsive">
+        <table id="myTable" class="table">
+            <thead class="text-black">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.deal_name)</th>
+                    <th>@Html.DisplayNameFor(model => model.deal_description)</th>
+                    <th>@Html.DisplayNameFor(model => model.deal_date)</th>
+                    <th>@Html.DisplayNameFor(model => model.Total_Amount)</th>
+                    <th>@Html.DisplayNameFor(model => model.amount_received)</th>
+                    <th>@Html.DisplayNameFor(model => model.pending_amount)</th>
+                    <th>@Html.DisplayNameFor(model => model.closing_date)</th>
+                    <th>@Html.DisplayNameFor(model => model.description)</th>
+                    <th>@Html.DisplayNameFor(model => model.product_name)</th>
+                    <th>@Html.DisplayNameFor(model => model.Client.ClientID)</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="client">
+                        <td>@Html.DisplayFor(modelItem => item.deal_name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.deal_description)</td>
+                        <td>@Html.DisplayFor(modelItem => item.deal_date)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Total_Amount)</td>
+                        <td>@Html.DisplayFor(modelItem => item.amount_received)</td>
+                        <td>@Html.DisplayFor(modelItem => item.pending_amount)</td>
+                        <td>@Html.DisplayFor(modelItem => item.closing_date)</td>
+                        <td>@Html.DisplayFor(modelItem => item.description)</td>
+                        <td>@Html.DisplayFor(modelItem => item.product_name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Client.ClientID)</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                              
+                                <a asp-action="Details" asp-route-id="@item.deal_id" class="btn"><i class="fas fa-eye"></i> Details</a>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
