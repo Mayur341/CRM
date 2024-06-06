@@ -70,9 +70,18 @@
 
 
 <div class="table-container">
+    <div class="d-flex justify-content-between">
+        <h6>Prospects List</h6>
+        <a asp-controller="Client" asp-action="Create"  class="btn btn-sm bg-danger text-white" title="Details">
+            Add New Client
+        </a>
+
+    </div>
+    <hr class="faint-line" />
+
     <div class="table-responsive">
         <table id="myTable" class="table">
-            <thead class="text-black">
+            <thead class="text-black mb-5">
                 <tr>
                     <th>Client Id</th>
                     <th>Client Name</th>
@@ -85,7 +94,9 @@
                     <th>Client Status</th>
                     <th>Action</th>
                 </tr>
+                
             </thead>
+            
         <tbody>
             @foreach (var item in Model)
             {
