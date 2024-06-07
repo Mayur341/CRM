@@ -1,4 +1,5 @@
-﻿@model CRM.Models.Lead
+﻿<!--latest-->
+@model CRM.Models.Lead
 
 @{
     ViewData["Title"] = "Details";
@@ -10,13 +11,19 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        .container{
+            padding-right:0px;
+            padding-left:0px;
 
-        <!--
+        }
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f8f9fa;
             color: #343a40;
-            
+            background: radial-gradient( rgba(0, 0, 0, 0.2), transparent);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
         }
 
         h1, h4 {
@@ -60,270 +67,173 @@
                 .actions .btn-secondary:hover {
                     background-color: #5a6268;
                     border-color: #545b62;
-                }-->
-        body {
-            background: radial-gradient( rgba(0, 0, 0, 0.2), transparent);
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-        }
+                }
 
         .heading {
-
             background-color: whitesmoke;
-            height:40px;
-            display:flex;
-            align-items:center;
-            
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
         }
-        .heading span{
-            font-size:14px;
-            font-weight:bold;
-            margin-left:20px;
 
+            .heading span {
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+        .heading-btn .btn {
+            margin-right: 5px;
         }
-        .company-name span{
+
+        .middle {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 20px 20px;
+            justify-content: center;
+        }
+
+        .symbol, .c-info, .info {
+            background-color: whitesmoke;
+            padding: 20px;
+            margin: 10px;
+            flex: 1;
+            min-width: 300px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .symbol {
+            text-align: center;
+        }
+
+        .info {
+            margin: 30px 30px;
+        }
+
+        .company-name span {
             font-size: 14px;
             font-weight: bold;
         }
-
-        .info{
-            background-color: whitesmoke;
-
-        }
-        .middle{
-
-            display:flex;
-            margin:20px 20px;
-            
-            background: background: radial-gradient( rgba(0, 0, 0, 0.2), transparent);
-            justify-content:center;
-            
-
+        /* Define a custom class for the button */
+        .btn-custom {
+            background-color: #008094; /* Set the background color */
+            padding: 5px 10px; /* Adjust padding for smaller size */
         }
 
-        .symbol{
-            background-color: whitesmoke;
-            height:140px;
-            width: 350px;
-        }
-
-        .c-info{
-            background-color: whitesmoke;
-            margin-left:20px;
-            width:100%;
-        }
-
-        .info{
-            height: 100%;
-            margin-right:20px;
-           margin-bottom:20px;
-            margin-left:20px;
-           
-        }
 
         .lead-details-list dt, .lead-details-list dd {
             font-size: 12px;
-            color:#55585a;
+            color: #55585a;
             margin-bottom: 10px;
         }
 
-        .actions .action-button {
-            font-size: 10px;
-            color: grey;
-        }
-
-        .main-container {
-            border: none; /* Remove default border */
-            border-radius: 3px; /* Optional: Rounded corners */
-            
-            
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Faint black shadow */
-            background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05)); /* Gradient effect */
-        }
-
-        .table{
-            padding:20px;
-        }
-        
-        .heading{
-            display:flex;
-            justify-content:space-between;
-        }
-
-       
-
-        .btn i {
-            margin-right: 8px; /* Space between icon and text */
-        }
-
-        .heading-btn{
-            margin-right:20px;
-        }
-
         .image-container {
-            width: 45px; /* Set the desired width for the image container */
-            margin-top:10px; /* Center the container */
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
             .image-container img {
-                width: 100%; /* Make the image fill the container */
-                height: auto; /* Maintain the aspect ratio */
+                width: 45px;
+                height: auto;
             }
 
-            .view-btn a{
+        .view-btn .btn {
             background-color: #328491;
-            }
+        }
+
+        .main-container {
+            width:100%;
+            border: 1px solid rgba(0, 0, 0, 0.2); /* Faint border */
+            border-radius: 5px; 
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Faint black shadow */
+            background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.03)); /* Gradient effect */
+            margin-top:0px;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        
-
-       <!-- <div>
-            <h5>LEAD DETAILS</h5>
-            <hr />
-            <dl class="row">
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.LeadName)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.LeadName)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.LeadDate)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.LeadDate)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.LeadDescription)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.LeadDescription)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Client)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Client.ClientID)
-                </dd>
-                <dt class="col-sm-2">
-                    ClientName
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Client.ClientName)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.LeadStage)
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.LeadStage.LeadStageID)
-                </dd>
-            </dl>
-        </div>
-        <div class="actions d-flex">
-            <a asp-action="Edit" asp-route-id="@Model?.LeadID" class="btn btn-primary">Edit</a>
-            <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
-        </div>-->
-
+    <div class="container main-container ">
         <div class="heading">
-            <div>
             <span>Lead Information</span>
-            </div>
             <div class="heading-btn">
-            <a asp-controller="Leads" asp-action="Edit" asp-route-id="@Model.LeadID" class="btn btn-sm"  text-white" title="Edit">
-                <i class="fas fa-edit"></i>Edit
-            </a>
-            <a asp-controller="Leads" asp-action="Delete" asp-route-id="@Model.LeadID" class="btn btn-sm" text-white" title="Remove">
-                <i class="fas fa-trash"></i>Remove
-            </a>
+                <a asp-controller="Leads" asp-action="Edit" asp-route-id="@Model.LeadID" class="btn btn-sm text-white" title="Edit">
+                    <i class="fas fa-edit"></i>Edit
+                </a>
+                <a asp-controller="Leads" asp-action="Delete" asp-route-id="@Model.LeadID" class="btn btn-custom btn-sm  bg-danger text-white" title="Remove">
+                    <i class="fas fa-trash mr-1 " style="font-size: 12px;"></i><span style="font-size: 12px;">Remove</span>
+                </a>
+
             </div>
         </div>
 
-        <div class="middle">
-<div class="symbol">
+        <div class="middle row">
+            <div class="symbol col-md-4">
                 <div class="image-container">
-                    <img src="/images/final.jpg" class="img-fluid" alt="User Image" ">
+                    <img src="/images/final.jpg" class="img-fluid" alt="User Image">
+                </div>
+                <div class="company-name mt-2">
+                    <span>@Model.Client.OrganizationName</span><br>
+                    <span style="font-size: 10px;">CLIENT NUMBER : @Model.Client.ClientID</span>
+                </div>
+                <div class="view-btn mt-2">
+                    <a asp-controller="Client" asp-action="Details" asp-route-id="@Model.Client.ClientID" class="btn btn-custom btn-sm text-white" title="Edit">
+                        <i class="fas fa-eye mr-1" style="font-size: 12px;"></i><span style="font-size: 12px;">View</span>
+                    </a>
                 </div>
 
-<div class="company-name">
-    <span>@Model.Client.OrganizationName<span>
-        </br>
-                            <span style="font-size: 10px;">CLIENT NUMBER : @Model.Client.ClientID</span>
-
-</div>
-<div class="view-btn">
-                    <a asp-controller="Client" asp-action="Details" asp-route-id="@Model.Client.ClientID" class="btn btn-sm bg-success  text-white" title="Edit">
-                        <i class="fas fa-eye"></i>View
-                    </a>
-</div>
-</div>
-<div class="c-info">
-    
-</div>
 
 
+
+            </div>
+
+            <div class="c-info col-md-8">
+                <div class="table">
+                    <dl class="row lead-details-list">
+                        <dt class="col-sm-4">Client Name</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Client.ClientName)</dd>
+                        <dt class="col-sm-4">Client Mobile No</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Client.MobileNumber)</dd>
+                        <dt class="col-sm-4">Client Email Id</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Client.Email)</dd>
+                        <dt class="col-sm-4">Client Source</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Client.Source.SourceID)</dd>
+                    </dl>
+                </div>
+            </div>
         </div>
-
 
         <div class="info">
             <div class="table">
-               <!-- <h5 class="lead-details-header">LEAD DETAILS</h5>
-                <hr /> -->
                 <dl class="row lead-details-list">
-                    <dt class="col-sm-2">
-                        Lead Name
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.LeadName)
-                    </dd>
-                    <dt class="col-sm-2">
-                        Lead Date
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.LeadDate)
-                    </dd>
-                    <dt class="col-sm-2">
-                        Lead Description
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.LeadDescription)
-                    </dd>
-                    <dt class="col-sm-2">
-                        Client
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Client.ClientID)
-                    </dd>
-                    <dt class="col-sm-2">
-                        Client Name
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Client.ClientName)
-                    </dd>
-                    <dt class="col-sm-2">
-                        Lead Stage
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.LeadStage.LeadStageID)
-                    </dd>
+                    <dt class="col-sm-4">Lead Name</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.LeadName)</dd>
+                    <dt class="col-sm-4">Lead Date</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.LeadDate)</dd>
+                    <dt class="col-sm-4">Lead Description</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.LeadDescription)</dd>
+                    <dt class="col-sm-4">Client</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Client.ClientID)</dd>
+                    <dt class="col-sm-4">Client Name</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.Client.ClientName)</dd>
+                    <dt class="col-sm-4">Lead Stage</dt>
+                    <dd class="col-sm-8">@Html.DisplayFor(model => model.LeadStage.LeadStageID)</dd>
                 </dl>
-                <div class="actions d-flex">
-                    <a asp-action="Edit" asp-route-id="@Model?.LeadID" class="btn btn-primary action-button">Edit</a>
-                    <a asp-action="Index" class="btn btn-secondary ml-2 action-button">Back to List</a>
-                </div>
-                
             </div>
-            
-           
+            <div class="actions d-flex justify-content-lg-end">
+                <a asp-action="Edit" asp-route-id="@Model?.LeadID" class="btn btn-custom btn-sm btn-primary action-button">
+                    <i class="fas fa-edit mr-1" style="font-size: 12px;"></i><span style="font-size: 12px;">Edit</span>
+                </a>
+                <a asp-action="Index" class="btn btn-custom btn-sm btn-secondary ml-2 action-button">
+                    <i class="fas fa-list mr-1" style="font-size: 12px;"></i><span style="font-size: 12px;">Back to List</span>
+                </a>
+            </div>
+
         </div>
-        </div>
-
-
-
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
