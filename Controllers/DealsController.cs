@@ -35,7 +35,7 @@ namespace CRM.Controllers
             }
 
             var deal = await _context.Deals
-                .Include(d => d.Client)
+                .Include(d => d.Client.Lead)
                 .FirstOrDefaultAsync(m => m.deal_id == id);
             if (deal == null)
             {

@@ -62,27 +62,40 @@
         text-align: center;
         margin-bottom: 20px;
     }
+
+    .main-content {
+        margin-top: 65px !important;
+    }
 </style>
 
 <div class="table-container">
+
+    <div class="d-flex justify-content-between">
+        <h6>Deal List</h6>
+        <a asp-controller="Client" asp-action="Create" class="btn btn-sm bg-danger text-white" title="Details">
+            Add New Client
+        </a>
+      
+
+
+    </div>
     
-    <p>
-        <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus"></i> Create New</a>
-    </p>
+    </hr>
+
     <div class="table-responsive">
         <table id="myTable" class="table">
             <thead class="text-black">
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.deal_name)</th>
-                    <th>@Html.DisplayNameFor(model => model.deal_description)</th>
-                    <th>@Html.DisplayNameFor(model => model.deal_date)</th>
-                    <th>@Html.DisplayNameFor(model => model.Total_Amount)</th>
-                    <th>@Html.DisplayNameFor(model => model.amount_received)</th>
-                    <th>@Html.DisplayNameFor(model => model.pending_amount)</th>
-                    <th>@Html.DisplayNameFor(model => model.closing_date)</th>
-                    <th>@Html.DisplayNameFor(model => model.description)</th>
-                    <th>@Html.DisplayNameFor(model => model.product_name)</th>
-                    <th>@Html.DisplayNameFor(model => model.Client.ClientID)</th>
+                    <th>Deal Name</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Total Amount</th>
+                    <th>Amount Received</th>
+                    <th>Pending Amount</th>
+                    <th>Closing Date</th>
+                    <th>Description</th>
+                    <th>Product Name</th>
+                    <th>Client ID</th>
                     <th>Action</th>
                 </tr>
             </thead>

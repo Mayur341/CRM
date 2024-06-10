@@ -53,6 +53,10 @@
         position: relative;
         overflow: hidden;
     }
+
+    .main-content{
+        margin-top:65px !important;
+    }
 </style>
 
 
@@ -60,7 +64,7 @@
 <div class="table-container">
 
     <div class="d-flex justify-content-between">
-        <h5>Lead List</h5>
+        <h6>Lead List</h6>
     </div>
 
     <div id="tableControls">
@@ -72,10 +76,10 @@
             
             <thead class="text-black">
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.LeadName)</th>
-                    <th>@Html.DisplayNameFor(model => model.LeadDate)</th>
-                    <th>@Html.DisplayNameFor(model => model.LeadDescription)</th>
-                    <th>@Html.DisplayNameFor(model => model.Client)</th>
+                    <th>Lead Name</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Client</th>
                     <th>current_lead_stage</th>
                     <th>Next_stage</th>
                     <th>Messages</th>
