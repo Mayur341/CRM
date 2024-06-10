@@ -12,12 +12,55 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            color: #343a40;
-           
+            background: radial-gradient( rgba(0, 0, 0, 0.2), transparent);
+            
+         }
+         .client-container{
+
+           background-color:whitesmoke;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+         }
+
+         span{
+             font-family:14px;
+             font-color:black;
+             font-weight:bold;
+         }
+
+
+
+        .client-container dt {
+             font-family: 'Arial', sans-serif;
+            font-size: 12px !important;
+            color:black#55585a !important;
+            font-weight:bold;
+            margin-bottom: 10px;
         }
 
-        h1, h4, h5 {
+
+         .client-container dd {
+            font-family: 'Arial', sans-serif;
+            font-size: 12px !important;
+            color: black !important;
+            margin-bottom: 10px;
+        }
+         
+         .client-container{
+             padding:10px;
+         }
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         h1, h4, h5 {
             color: #003153; /* Prussian blue */
             font-weight: bold;
         }
@@ -27,10 +70,7 @@
             color: #003153; /* Prussian blue */
         }
 
-        .form-control, .row dd {
-            border: 1px solid #ced4da;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Shadow around input fields */
-        }
+        
 
         .btn-primary {
             background-color: #003153; /* Prussian blue */
@@ -96,66 +136,70 @@
             .btn-success:hover {
                 background-color: #218838;
                 border-color: #1e7e34;
-            }
+            } */
+
+
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="client-container">
         <div>
-            <h5>CLIENT DETAILS</h5>
+            <span>Client Details</span>
             <hr />
+
+            <h4>Company Name : <span class="style:text-bold">@Model.OrganizationName</span></h4>
             <dl class="row">
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ClientID)
+                    Client Id
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.ClientID)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ClientName)
+                    Client Name
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.ClientName)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Date)
+                    Date
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Date)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Subject)
+                    Subject
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Subject)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.OrganizationName)
+                    Organization 
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.OrganizationName)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.MobileNumber)
+                    Mobile No
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.MobileNumber)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Email)
+                    Email
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Email)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Source)
+                   Source
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.Source.SourceName)
                 </dd>
                 <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.ClientStatus)
+                    Client Status
                 </dt>
                 <dd class="col-sm-10">
                     @Html.DisplayFor(model => model.ClientStatus.StageName)
