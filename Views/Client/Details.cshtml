@@ -35,8 +35,11 @@
         }
 
         .heading {
+            margin-right:27px;
             margin-left: 15px;
             padding-top: 15px;
+            display:flex;
+            justify-content:space-between;
         }
 
         .heading span{
@@ -56,7 +59,7 @@
       .client-container  .actions {
             display: flex;
             justify-content: flex-end;
-            margin-right:20px;
+            margin-right:15px;
             padding:20px;
         }
 
@@ -144,7 +147,27 @@
 
     <div class="client-container">
         <div class="heading">
+            <div>
             <span>Client Details</span>
+            </div>
+            <div>
+                @if (Model.Deal != null)
+                {
+                    <a asp-action="Details" asp-controller="Deals" asp-route-id="@Model.Deal.deal_id" class="btn btn-custom btn-sm btn-primary ml-2 mr-20" style="background-color: #008094;">
+                        <i class="fas fa-eye mr-1" style="font-size: 12px;"></i><span style="font-size: 12px; color: white;">View Deal</span>
+                    </a>
+                }
+                else
+                {
+                    
+
+                    <a asp-action="Create" asp-controller="Deals" asp-route-id="@Model.ClientID" class="btn btn-custom btn-sm btn-primary ml-2" style="background-color: #008094;">
+                        <i class="fas fa-plus mr-1" style="font-size: 12px;"></i><span style="font-size: 12px; color: white;">Add Deal</span>
+                    </a>
+                }
+
+                </div>
+            
         </div>
         <hr />
 
