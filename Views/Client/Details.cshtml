@@ -2,6 +2,20 @@
 
 @{
     ViewData["Title"] = "Details";
+
+    var stageClasses = new Dictionary<string, string>
+    {
+        { "Pre-Enquiry", "stage-pre-enquiry" },
+        { "First-Followup", "stage-1st-followup" },
+        { "Second-Followup", "stage-2nd-followup" },
+        { "Negotiation", "stage-negotiation" },
+        { "Approved", "stage-won" },
+        { "Lost", "stage-loss" }
+    };
+
+    string stageClass = stageClasses.ContainsKey(Model.ClientStatus.StageName)
+        ? stageClasses[Model.ClientStatus.StageName]
+        : "";
 }
 
 <!DOCTYPE html>
@@ -12,204 +26,167 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: radial-gradient( rgba(0, 0, 0, 0.2), transparent);
-            
-         }
-         .client-container{
+            background: radial-gradient(rgba(0, 0, 0, 0.2), transparent);
+        }
 
-           background-color:whitesmoke;
-           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .client-info {
+            margin-left: 15px;
+            margin-top: 30px;
+        }
 
-         }
+        .heading {
+            margin-left: 15px;
+            padding-top: 15px;
+        }
 
-         span{
-             font-family:14px;
-             font-color:black;
-             font-weight:bold;
-         }
+        .heading span{
+            font-weight:bold;
+        }
+
+        .company-name {
+            margin-left: 15px;
+        }
+
+        .client-container {
+            background-color: whitesmoke;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+      .client-container  .actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-right:20px;
+            padding:20px;
+        }
+
+
+
+        .actions .btn-custom.btn-primary span,
+        .actions .btn-custom.btn-secondary span {
+            color: white;
+        }
+
+
+        .stage span 
+
+        {
+            font-family: 'Arial', sans-serif;
+            font-size: 12px !important;
+            text: white !important;
+            font-weight: normal;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            border-radius:4px !important;
+        }
+
+       .company-name span {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px !important;
+            color: black !important;
+            font-weight: bold;
+        }
+
+
+        .actions .btn span {
+            color: white;
+            font-weight: normal;
+        }
 
 
 
         .client-container dt {
-             font-family: 'Arial', sans-serif;
+            font-family: 'Arial', sans-serif;
             font-size: 12px !important;
-            color:black#55585a !important;
-            font-weight:bold;
-            margin-bottom: 10px;
+            color:black !important;
+            font-weight: bold;
+           
         }
 
-
-         .client-container dd {
+        .client-container dd {
             font-family: 'Arial', sans-serif;
             font-size: 12px !important;
             color: black !important;
-            margin-bottom: 10px;
-        }
-         
-         .client-container{
-             padding:10px;
-         }
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         
-         h1, h4, h5 {
-            color: #003153; /* Prussian blue */
-            font-weight: bold;
+            
         }
 
-        .form-group label, .row dt {
-            font-weight: bold;
-            color: #003153; /* Prussian blue */
+        .stage-pre-enquiry {
+            background-color: teal; /* Light Gray */
         }
 
+        .stage-1st-followup {
+            background-color: peru; /* Light Blue */
+        }
+
+        .stage-2nd-followup {
+            background-color: coral; /* Light Green */
+        }
+
+        .stage-negotiation {
+            background-color: orange; /* Orange */
+        }
+
+        .stage-won {
+            background-color: #008000; /* Green */
+        }
+
+        .stage-loss {
+            background-color: #FF0000; /* Red */
+        }
+
+      
         
 
-        .btn-primary {
-            background-color: #003153; /* Prussian blue */
-            border-color: #003153; /* Prussian blue */
-        }
-
-            .btn-primary:hover {
-                background-color: #002b48; /* Darker shade of Prussian blue */
-                border-color: #002b48; /* Darker shade of Prussian blue */
-            }
-
-        .btn-danger {
-            background-color: #dc3545; /* Red color for delete button */
-            border-color: #dc3545;
-        }
-
-            .btn-danger:hover {
-                background-color: #c82333; /* Darker red */
-                border-color: #bd2130;
-            }
-
-        .text-danger {
-            color: red;
-        }
-
-        .actions {
-            margin-top: 20px; /* Adjust margin from top */
-        }
-
-            .actions .btn-secondary {
-                background-color: #6c757d;
-                border-color: #6c757d;
-            }
-
-                .actions .btn-secondary:hover {
-                    background-color: #5a6268;
-                    border-color: #545b62;
-                }
-
-        .mb-3 .btn {
-            margin-right: 10px; /* Add margin between buttons */
-        }
-
-        .card-header {
-            background-color: #003153; /* Prussian blue */
-            color: white;
-        }
-
-        th {
-            font-weight: bold;
-            color: #003153; /* Prussian blue */
-        }
-
-        .table td, .table th {
-            border: 1px solid #ced4da;
-        }
-
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-        }
-
-            .btn-success:hover {
-                background-color: #218838;
-                border-color: #1e7e34;
-            } */
-
-
+        
     </style>
 </head>
 <body>
 
     <div class="client-container">
-        <div>
+        <div class="heading">
             <span>Client Details</span>
-            <hr />
+        </div>
+        <hr />
 
-            <h4>Company Name : <span class="style:text-bold">@Model.OrganizationName</span></h4>
+        <div class="company-name">
+            <h6>Company Name: <span>@Model.OrganizationName</span></h6>
+        </div>
+
+        <div class="client-info">
             <dl class="row">
-                <dt class="col-sm-2">
-                    Client Id
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ClientID)
-                </dd>
-                <dt class="col-sm-2">
-                    Client Name
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ClientName)
-                </dd>
-                <dt class="col-sm-2">
-                    Date
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Date)
-                </dd>
-                <dt class="col-sm-2">
-                    Subject
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Subject)
-                </dd>
-                <dt class="col-sm-2">
-                    Organization 
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.OrganizationName)
-                </dd>
-                <dt class="col-sm-2">
-                    Mobile No
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.MobileNumber)
-                </dd>
-                <dt class="col-sm-2">
-                    Email
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Email)
-                </dd>
-                <dt class="col-sm-2">
-                   Source
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Source.SourceName)
-                </dd>
-                <dt class="col-sm-2">
-                    Client Status
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.ClientStatus.StageName)
+                <dt class="col-sm-2">Client Id:</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.ClientID)</dd>
+                <dt class="col-sm-2">Client Name:</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.ClientName)</dd>
+                <dt class="col-sm-2">Date:</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.Date)</dd>
+                <dt class="col-sm-2">Subject:</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.Subject)</dd>
+                <dt class="col-sm-2">Organization:</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.OrganizationName)</dd>
+                <dt class="col-sm-2">Mobile No:</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.MobileNumber)</dd>
+                <dt class="col-sm-2">Email:</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.Email)</dd>
+                <dt class="col-sm-2">Source:</dt>
+                <dd class="col-sm-10">@Html.DisplayFor(model => model.Source.SourceName)</dd>
+                <dt class="col-sm-2">Client Status:</dt>
+                <dd class="col-sm-10 stage">
+                    <span class="@stageClass text-white">
+                        @Html.DisplayFor(model => model.ClientStatus.StageName)
+                    </span>
+
                 </dd>
             </dl>
         </div>
-        <div class="actions d-flex">
-            <a asp-action="Edit" asp-route-id="@Model?.ClientID" class="btn btn-primary">Edit</a>
-            <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
+        <div class="actions">
+            <a asp-action="Edit" asp-route-id="@Model?.ClientID" class="btn btn-custom btn-sm btn-primary action-button" style="background-color: #008094;">
+                <i class="fas fa-edit mr-1" style="font-size: 12px;"></i><span style="font-size: 12px;">Edit</span>
+            </a>
+            <a asp-action="Index" class="btn btn-custom btn-sm btn-secondary ml-2 action-button" style="background-color: #6c757d;">
+                <i class="fas fa-list mr-1" style="font-size: 12px;"></i><span style="font-size: 12px;">Back to List</span>
+            </a>
         </div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
