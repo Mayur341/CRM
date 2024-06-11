@@ -55,6 +55,7 @@ namespace CRM.Controllers
             var client = await _context.Clients
                 .Include(c => c.ClientStatus)
                 .Include(c => c.Source)
+                .Include(c => c.Deal)
                 .FirstOrDefaultAsync(m => m.ClientID == id);
             if (client == null)
             {

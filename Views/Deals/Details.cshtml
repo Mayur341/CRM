@@ -162,16 +162,19 @@
         <div class="heading">
             <span>Deal Information</span>
             <div class="heading-btn">
-                <a asp-controller="Leads" asp-action="Create" asp-route-id="@Model.Client.ClientID" class="btn btn-sm bg-danger text-white" title="Details">
-                    + Convert to Lead
-                </a>
-               
 
-                <a asp-controller="Leads" asp-action="Details
-       "asp-route-id="@Model.Client.Lead" class="btn btn-sm bg-danger text-white" title="Details">
-                    + View Lead
-                </a>
-
+                @if (Model.Client.Lead == null)
+                {
+                    <a asp-controller="Leads" asp-action="Create" asp-route-id="@Model.Client.ClientID" class="btn btn-custom btn-sm btn-primary ml-2" style="background-color: #dc3545;">
+                        <i class="fas fa-plus mr-1" style="font-size: 12px;"></i><span style="font-size: 12px; color: white;">Convert to Lead</span>
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Leads" asp-action="Details" asp-route-id="@Model.Client.Lead" class="btn btn-custom btn-sm btn-primary ml-2" style="background-color: #dc3545;">
+                        <i class="fas fa-eye mr-1" style="font-size: 12px;"></i><span style="font-size: 12px; color: white;">View Lead</span>
+                    </a>
+                }
 
 
 
