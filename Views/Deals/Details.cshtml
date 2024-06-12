@@ -163,7 +163,7 @@
             <span>Deal Information</span>
             <div class="heading-btn">
 
-                @if (Model.Client.Lead == null)
+                @if (Model.Client == null)
                 {
                     <a asp-controller="Leads" asp-action="Create" asp-route-id="@Model.Client.ClientID" class="btn btn-custom btn-sm btn-primary ml-2" style="background-color: #dc3545;">
                         <i class="fas fa-plus mr-1" style="font-size: 12px;"></i><span style="font-size: 12px; color: white;">Convert to Lead</span>

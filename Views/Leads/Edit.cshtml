@@ -10,26 +10,22 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        .card {
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-            color: #343a40;
-            
+            background: radial-gradient(rgba(0, 0, 0, 0.2), transparent);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
         }
 
-        h1, h4 {
-            color: #003153; /* Prussian blue */
-            font-weight: bold;
-        }
-
-        .form-group label {
-            font-weight: bold;
-            color: #003153; /* Prussian blue */
-        }
-
-        .form-control {
-            border: 1px solid #ced4da;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Shadow around input fields */
+        .card-header {
+            background-color: #343a40; /* Dark grey */
+            color: white;
         }
 
         .btn-primary {
@@ -37,79 +33,111 @@
             border-color: #003153; /* Prussian blue */
         }
 
-            .btn-primary:hover {
-                background-color: #002b48; /* Darker shade of Prussian blue */
-                border-color: #002b48; /* Darker shade of Prussian blue */
-            }
-
         .text-danger {
             color: red;
+        }
+
+        .text-center {
+            margin-top: 20px;
+        }
+
+        .form-row {
+            margin-bottom: 0px; /* Increase the gap between rows */
+        }
+
+        .form-group {
+            margin-bottom: 0px; /* Increase the gap between input fields */
+        }
+
+        label {
+            font-family: 'Arial', sans-serif !important;
+            font-size: 12px !important;
+            color: black !important;
+        }
+
+        input.form-control,
+        textarea.form-control,
+        select.form-control {
+            font-family: 'Arial', sans-serif !important;
+            font-size: 12px !important;
+            color: #666 !important; /* Slightly faint color */
+            background-color: white;
+        }
+
+        span {
+            font-size: 14px !important;
+            font-family: 'Arial', 'Sans Serif' !important;
+            font-weight: bold !important;
+            color: black !important;
+            margin-left: 20px;
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
-
     <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-20">
+                <div class="card shadow-sm">
+                    <span>Edit Lead</span>
+                    <div class="card-body">
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="LeadID" />
 
-        <hr />
-        <div class="row">
-            <div class="col-md-8">
-                <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="LeadID" />
+                            <!-- First row -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="LeadName">Lead Name</label>
+                                    <input asp-for="LeadName" class="form-control" />
+                                    <span asp-validation-for="LeadName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label asp-for="LeadDate">Lead Date</label>
+                                    <input asp-for="LeadDate" class="form-control" />
+                                    <span asp-validation-for="LeadDate" class="text-danger"></span>
+                                </div>
+                            </div>
 
-                    <div class="form-group">
-                        <label asp-for="ClientID" class="control-label"></label>
-                        <input id="ClientID" name="ClientID" class="form-control" value="@ViewBag.ClientID" readonly />
+                            <!-- Client ID hidden field -->
+                            <input type="hidden" asp-for="ClientID" />
+
+                            <!-- Second row -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label asp-for="LeadStageID">Lead Stage</label>
+                                    <select asp-for="LeadStageID" class="form-control" asp-items="ViewBag.LeadStageID"></select>
+                                    <span asp-validation-for="LeadStageID" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label asp-for="LeadDescription">Lead Description</label>
+                                    <input asp-for="LeadDescription" class="form-control"></input>
+                                    <span asp-validation-for="LeadDescription" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+
+                            <div class="d-flex justify-content-lg-end">
+                                <button type="submit" class="btn btn-custom btn-sm btn-primary action-button">
+                                    <i class="fas fa-save " style="font-size: 12px;"></i><span class="text-white" style="font-size: 12px, text=white;">Save</span>
+                                </button>
+                                <a asp-action="Index" class="btn btn-custom btn-sm btn-secondary ml-2 action-button">
+                                    <i class="fas fa-list " style="font-size: 12px;"></i><span  class="text-white" style="font-size: 12px, text=white;">Back to List</span>
+                                </a>
+                            </div>
+
+                        </form>
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label asp-for="LeadName" class="control-label"></label>
-                            <input asp-for="LeadName" class="form-control" />
-                            <span asp-validation-for="LeadName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label asp-for="LeadDate" class="control-label"></label>
-                            <input asp-for="LeadDate" class="form-control" />
-                            <span asp-validation-for="LeadDate" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="LeadDescription" class="control-label"></label>
-                        <textarea asp-for="LeadDescription" class="form-control"></textarea>
-                        <span asp-validation-for="LeadDescription" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group">
-                        <label asp-for="LeadStageID" class="control-label"></label>
-                        <select asp-for="LeadStageID" class="form-control" asp-items="ViewBag.LeadStageID"></select>
-                        <span asp-validation-for="LeadStageID" class="text-danger"></span>
-                    </div>
-
-                    <div class="form-group d-flex justify-content-center align-items-center ">
-                        <input type="submit" value="Save" class="btn btn-primary" />
-                        <a asp-action="Index" class="btn btn-secondary ml-2">Back to List</a>
-                    </div>
-
-                </form>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script>
-        @section Scripts {
-            @{
-                await Html.RenderPartialAsync("_ValidationScriptsPartial");
-            }
-        }
-    </script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
 </body>
 </html>
