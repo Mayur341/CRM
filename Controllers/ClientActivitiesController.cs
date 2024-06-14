@@ -24,17 +24,6 @@ namespace CRM.Controllers
        
 
 
-
-
-
-
-
-
-
-
-
-
-
         public async Task<IActionResult> ActivityByClientId(int? id)
         {
             if (id == null)

@@ -1,4 +1,5 @@
-﻿@model CRM.Models.Client
+﻿<!--yahase-->
+@model CRM.Models.Client
 
 @{
     ViewData["Title"] = "Details";
@@ -35,16 +36,16 @@
         }
 
         .heading {
-            margin-right:27px;
+            margin-right: 27px;
             margin-left: 15px;
             padding-top: 15px;
-            display:flex;
-            justify-content:space-between;
+            display: flex;
+            justify-content: space-between;
         }
 
-        .heading span{
-            font-weight:bold;
-        }
+            .heading span {
+                font-weight: bold;
+            }
 
         .company-name {
             margin-left: 15px;
@@ -53,64 +54,54 @@
         .client-container {
             background-color: whitesmoke;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius:8px;
+            border-radius: 8px;
         }
 
-      .client-container  .actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-right:15px;
-            padding:20px;
-        }
-
-
+            .client-container .actions {
+                display: flex;
+                justify-content: flex-end;
+                margin-right: 15px;
+                padding: 20px;
+            }
 
         .actions .btn-custom.btn-primary span,
         .actions .btn-custom.btn-secondary span {
             color: white;
         }
 
-
-        .stage span 
-
-        {
+        .stage span {
             font-family: 'Arial', sans-serif;
             font-size: 12px !important;
             text: white !important;
             font-weight: normal;
             text-transform: uppercase;
             padding: 5px 10px;
-            border-radius:4px !important;
+            border-radius: 4px !important;
         }
 
-       .company-name span {
+        .company-name span {
             font-family: 'Arial', sans-serif;
             font-size: 14px !important;
             color: black !important;
             font-weight: bold;
         }
 
-
         .actions .btn span {
             color: white;
             font-weight: normal;
         }
 
-
-
         .client-container dt {
             font-family: 'Arial', sans-serif;
             font-size: 12px !important;
-            color:black !important;
+            color: black !important;
             font-weight: bold;
-           
         }
 
         .client-container dd {
             font-family: 'Arial', sans-serif;
             font-size: 12px !important;
             color: black !important;
-            
         }
 
         .stage-pre-enquiry {
@@ -137,10 +128,29 @@
             background-color: #FF0000; /* Red */
         }
 
-      
-        
+        .activity .btn-custom {
+            font-size: 12px;
+            padding: 5px 10px;
+            
+        }
 
-        
+        .activity .btn-primary {
+            background-color: #008094; /* Bootstrap primary color */
+            
+        }
+
+            
+
+        .activity .btn-secondary {
+            background-color: #008094;
+        }
+
+           
+
+        .btn-custom {
+            font-size: 12px;
+            padding: 5px 10px;
+        }
     </style>
 </head>
 <body>
@@ -148,7 +158,7 @@
     <div class="client-container">
         <div class="heading">
             <div>
-            <span>Client Details</span>
+                <span>Client Details</span>
             </div>
             <div>
                 @if (Model.Deal != null)
@@ -159,15 +169,11 @@
                 }
                 else
                 {
-                    
-
                     <a asp-action="Create" asp-controller="Deals" asp-route-id="@Model.ClientID" class="btn btn-custom btn-sm btn-primary ml-2" style="background-color: #008094;">
                         <i class="fas fa-plus mr-1" style="font-size: 12px;"></i><span style="font-size: 12px; color: white;">Add Deal</span>
                     </a>
                 }
-
-                </div>
-            
+            </div>
         </div>
         <hr />
 
@@ -198,7 +204,15 @@
                     <span class="@stageClass text-white">
                         @Html.DisplayFor(model => model.ClientStatus.StageName)
                     </span>
-
+                </dd>
+                <dt class="col-sm-2">Client Activity:</dt>
+                <dd class="col-sm-10 activity">
+                    <a asp-action="Create"   asp-controller="ClientActivities"   asp-route-id="@Model.ClientID" class="btn btn-custom btn-primary">
+                        <i class="fas fa-plus mr-1"></i>Add 
+                    </a>
+                    <a asp-action="ActivityByClientId" asp-controller="ClientActivities" asp-route-id="@Model.ClientID" class="btn btn-custom btn-primary">
+                        <i class="fas fa-eye mr-1"></i>View 
+                    </a>
                 </dd>
             </dl>
         </div>
@@ -210,7 +224,6 @@
                 <i class="fas fa-list mr-1" style="font-size: 12px;"></i><span style="font-size: 12px;">Back to List</span>
             </a>
         </div>
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
