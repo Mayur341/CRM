@@ -8,8 +8,6 @@ namespace CRM.Models
         public string LastName { get; set; } = " ";
 
 
-        // New navigation property
-        public virtual ICollection<Client> Clients { get; set; }
 
 
     }

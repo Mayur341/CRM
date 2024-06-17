@@ -51,12 +51,7 @@ namespace CRM.Models
 
 
 
-            modelBuilder.Entity<Client>()
-            .HasOne(c => c.User)
-            .WithMany()
-            .HasForeignKey(c => c.UserId)
-            .HasConstraintName("FK_Clients_AspNetUsers_UserId")
-            .IsRequired();
+           
 
         }
     }

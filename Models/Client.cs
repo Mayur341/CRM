@@ -31,9 +31,6 @@ public class Client
     public virtual Deal Deal { get; set; }
     public virtual Source Source { get; set; }
     public virtual ClientStage ClientStatus { get; set; }
-    // ForeignKey attribute to indicate the relationship with ApplicationUser
-    [ForeignKey("User")]
-    public string UserId { get; set; }
-    public virtual ApplicationUser User { get; set; }
+  
 
 }
