@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CRM.Controllers
 {
-    
+    [Authorize]
     public class ClientController : Controller
     {
         private readonly CRMContext _context;
@@ -23,7 +23,6 @@ namespace CRM.Controllers
 
         //export to pdf
       
-
 
 
 

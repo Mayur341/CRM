@@ -57,12 +57,14 @@ namespace CRM.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
-            [EmailAddress]
+            [StringLength(30, ErrorMessage = "First Name is too Long !!")]
+            [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Only letters are allowed.")]
             [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
             [Required]
-            [EmailAddress]
+            [StringLength(30, ErrorMessage = "Last Name is too Long !!")]
+            [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Only letters are allowed.")]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
@@ -101,9 +103,14 @@ namespace CRM.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                Console.WriteLine("checking user details:",user.FirstName,user.LastName,user.Email);
 
                 if (result.Succeeded)
                 {
