@@ -1,22 +1,88 @@
-﻿using CRM.Services;
+﻿using CRM.Models;
+using CRM.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace CRM.Controllers // Adjust namespace as per your application structure
 {
-    public class RoleController : Controller
+    public class RolesController : Controller
     {
         private readonly RoleService _roleService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RoleController(RoleService roleService)
+        private readonly RoleManager<IdentityRole> _roleManager;
+
+        public RolesController(RoleService roleService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _roleService = roleService;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
+        //custom method for user
+        [HttpGet]
+        public async Task<IActionResult> users()
+        {
+
+
+            var users = _userManager.Users.ToListAsync();
+            foreach (var user in await users)
+            {
+                Console.WriteLine($"Username: {user.UserName}, Email: {user.Email}");
+                // Add more properties as needed
+            }
+            ViewBag.add(users);
+
+            return View();
+        }
+
+
+
+
+
+
         // Action to display all roles
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var roles = await _roleService.GetAllRoles();
+            var users = await _userManager.Users.ToListAsync();
+
+
+            foreach (var user in users)
+            {
+                var roless = await _userManager.GetRolesAsync(user);
+
+                // Print user roles
+                Console.WriteLine($"User: {user.UserName}");
+                foreach (var r in roless) // Changed variable name to 'r' to avoid conflict
+                {
+                    Console.WriteLine($"- Role: {r}");
+                }
+            }
+
+
+
+            foreach (var user in users)
+            {
+                Console.WriteLine($"Username: {user.UserName}, Email: {user.Email}");
+                // Add more properties as needed
+            }
+
+
+
+
+            var userRolesDict = new Dictionary<ApplicationUser, IList<string>>();
+
+            foreach (var user in users)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+                userRolesDict[user] = userRoles;
+            }
+            ViewBag.UserRolesDict = userRolesDict;
+            ViewBag.users = users;
             return View(roles);
         }
 
@@ -100,6 +166,7 @@ namespace CRM.Controllers // Adjust namespace as per your application structure
         }
 
         // Action to remove a role from a user
+        [HttpPost]
         public async Task<IActionResult> RemoveRole(string userId, string roleName)
         {
             var result = await _roleService.RemoveRoleFromUser(userId, roleName);
@@ -135,4 +202,4 @@ namespace CRM.Controllers // Adjust namespace as per your application structure
             return View(roles);
         }
     }
-}
+} 

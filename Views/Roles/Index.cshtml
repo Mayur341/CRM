@@ -1,5 +1,77 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<string>  // Assuming this model represents a list of roles
+
 @{
+    ViewData["Title"] = "Roles";
+    var roles = Model;
 }
+
+<h1>Roles</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Role</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Role Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in roles)
+        {
+                <tr>
+                    <td>@role</td>
+                    <td>
+                        <form asp-action="Delete" method="post" style="display:inline;">
+                            <input type="hidden" name="roleName" value="@role" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Users</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>Roles Assigned</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kvp in ViewBag.UserRolesDict)
+        {
+            var user = kvp.Key;
+            var userRoles = kvp.Value;
+
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.UserName</td>
+                <td>
+                    @foreach (var role in userRoles)
+                    {
+                        <form asp-action="RemoveRole" method="post" style="display:inline;">
+                            <input type="hidden" name="userId" value="@user.Id" />
+                            <input type="hidden" name="roleName" value="@role" />
+                            <span>@role</span>
+                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                        </form>
+                        <br />
+                    }
+                </td>
+                <td>
+                    <a asp-action="AssignRole" asp-route-userId="@user.Id" class="btn btn-primary">Assign Role</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

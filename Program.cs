@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.AspNetCore.Identity;
+using CRM.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Configure CRMContext
@@ -29,6 +31,7 @@ builder.Services.AddDbContext<CRMContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
 
 
+builder.Services.AddScoped<RoleService>();
 
 
 
@@ -49,6 +52,14 @@ app.UseStaticFiles();
 
 
 app.UseRouting();
+app.Use(async (context, next) =>
+{
+    var path = context.Request.Path;
+    var method = context.Request.Method;
+    Console.WriteLine($"Request Path: {path}, Method: {method}");
+    await next.Invoke();
+});
+
 app.UseAuthentication();
 app.UseAuthorization();
 
