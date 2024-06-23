@@ -1,5 +1,157 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "User Management";
+}
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="custom-alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        @TempData["AlertMessage"]
+    </div>
+}
+
+<style>
+    .main-content {
+        margin-top: 50px !important;
+    }
+
+    /* Body and general styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background: radial-gradient(rgba(0, 0, 0, 0.3), transparent);
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
+
+    .text-black {
+        font-size: 14px;
+        font-weight: bold;
+        color: black;
+    }
+
+    .table th {
+        font-size: 12px !important;
+        font-weight: bold !important;
+        color: black !important;
+    }
+
+    .table td {
+        font-size: 12px !important;
+        color: black !important;
+    }
+
+    .table-container {
+        background-color: whitesmoke;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        margin-top: 20px;
+    }
+
+    .custom-alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        position: relative;
+    }
+
+    .btn-custom {
+        background-color: #008094; /* Set the background color */
+        padding: 5px 10px; /* Adjust padding for smaller size */
+    }
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .closebtn:hover {
+            color: black;
+        }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .faint-line {
+        border-top: 1px solid #ccc;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Modal styles */
+    .modal-body {
+        /* Customize as per your modal content */
+    }
+
+</style>
+
+<div class="table-container">
+    <div class="d-flex justify-content-between">
+        <h5>Users</h5>
+    </div>
+    <hr class="faint-line" />
+
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>Roles Assigned</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var kvp in ViewBag.UserRolesDict)
+                {
+                    var user = kvp.Key;
+                    var userRoles = kvp.Value;
+
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.UserName</td>
+                        <td>
+                            @foreach (var role in userRoles)
+                            {
+                                <form asp-action="RemoveRole" method="post" class="d-inline">
+                                    <input type="hidden" name="userId" value="@user.Id" />
+                                    <input type="hidden" name="roleName" value="@role" />
+                                    <span>@role</span>
+                                    <button type="submit" class="btn btn-link text-danger" style="padding: 0;">
+                                        <i class="fas fa-times"></i> <!-- Bootstrap Icons trash icon -->
+                                    </button>
+                                </form>
+                                <br />
+                            }
+                        </td>
+                        <td>
+                            <form asp-action="AssignRole" asp-route-userId="@user.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-custom btn-sm text-white" title="Assign Role">
+                                    <i class="fas fa-user-plus " style="font-size: 12px;"></i><span style="font-size: 12px;">Assign Role</span>
+                                </button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // JavaScript functions as needed
+    </script>
 }

@@ -25,17 +25,45 @@ namespace CRM.Controllers // Adjust namespace as per your application structure
         [HttpGet]
         public async Task<IActionResult> users()
         {
+            var roles = await _roleService.GetAllRoles();
+            var users = await _userManager.Users.ToListAsync();
 
 
-            var users = _userManager.Users.ToListAsync();
-            foreach (var user in await users)
+            foreach (var user in users)
+            {
+                var roless = await _userManager.GetRolesAsync(user);
+
+                // Print user roles
+                Console.WriteLine($"User: {user.UserName}");
+                foreach (var r in roless) // Changed variable name to 'r' to avoid conflict
+                {
+                    Console.WriteLine($"- Role: {r}");
+                }
+            }
+
+
+
+            foreach (var user in users)
             {
                 Console.WriteLine($"Username: {user.UserName}, Email: {user.Email}");
                 // Add more properties as needed
             }
-            ViewBag.add(users);
 
-            return View();
+
+
+
+            var userRolesDict = new Dictionary<ApplicationUser, IList<string>>();
+
+            foreach (var user in users)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+                userRolesDict[user] = userRoles;
+            }
+            ViewBag.UserRolesDict = userRolesDict;
+            ViewBag.users = users;
+            return View(roles);
+
+
         }
 
 
@@ -134,7 +162,10 @@ namespace CRM.Controllers // Adjust namespace as per your application structure
         [HttpGet]
         public async Task<IActionResult> AssignRole(string userId)
         {
+            var user= await _userManager.FindByIdAsync(userId);
             ViewBag.UserId = userId;
+            if (user != null) { ViewBag.UserName = user.Email; }
+            
             ViewBag.AllRoles = await _roleService.GetAllRoles();
             ViewBag.UserRoles = await _roleService.GetRolesForUser(userId);
 

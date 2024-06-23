@@ -1,48 +1,109 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@{
+﻿@{
     ViewBag.Title = "Assign Role";
     var userId = ViewBag.UserId;
     var userRoles = ViewBag.UserRoles as List<string>;
     var allRoles = ViewBag.AllRoles as List<string>;
 }
 
-<h1>Assign Role</h1>
+<!DOCTYPE html>
+<html>
 
-<div>
-    <h4>User ID: @userId</h4>
-    <h4>Current Roles:</h4>
-    <ul>
-        @foreach (var role in userRoles)
-        {
-                <li>@role</li>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewBag.Title</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(rgba(0, 0, 0, 0.3), transparent);
         }
-    </ul>
-</div>
 
-<div>
-    <h4>Assign Role</h4>
-    <form asp-action="AssignRole">
-        <div class="form-group">
-            <label for="roleName">Select Role:</label>
-            <select class="form-control" id="roleName" name="roleName">
-                @foreach (var role in allRoles)
+        .content-wrapper {
+            font-family: 'Arial', sans-serif;
+            background-color: whitesmoke;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+           
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #008094;
+        }
+
+        .role-list {
+            font-size: 12px;
+        }
+
+        .role-assign {
+            font-size: 12px;
+        }
+
+        .btn-custom {
+            font-size: 12px;
+            padding: 5px 10px;
+            background-color: #008094;
+            color: white;
+        }
+
+        .btn-custom-primary {
+            background-color: #008094;
+        }
+
+        .btn-custom-secondary {
+            background-color: #6c757d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content-wrapper">
+            <h5>@ViewBag.Title</h5>
+            <hr/>
+
+            <div class="section-title">USER INFORMATION</div>
+            <p>User ID:@userId</p>
+            <p>User Name: @ViewBag.UserName </p>
+            <p>Current Roles</p>
+            <ul class="list-group list-group-flush role-list">
+                @foreach (var role in userRoles)
                 {
-                        <option value="@role">@role</option>
+                    <li class="list-group-item">@role</li>
                 }
-            </select>
-        </div>
-        <input type="hidden" name="userId" value="@userId" /> <!-- Hidden field to pass userId -->
-        <button type="submit" class="btn btn-primary">Assign Role</button>
-    </form>
-</div>
+            </ul>
 
-@if (!ViewData.ModelState.IsValid)
-{
-        <div class="alert alert-danger mt-3">
-            <strong>Error:</strong> @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="section-title mt-4">ASSIGN NEW ROLE</div>
+            <form asp-action="AssignRole">
+                <div class="form-group">
+                    <label for="roleName">Select Role:</label>
+                    <select class="form-control" id="roleName" name="roleName">
+                        @foreach (var role in allRoles)
+                        {
+                            <option value="@role">@role</option>
+                        }
+                    </select>
+                </div>
+                <input type="hidden" name="userId" value="@userId" />
+                <button type="submit" class="btn btn-custom btn-primary">Assign Role</button>
+            </form>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger mt-3">
+                    <strong>Error:</strong> @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                </div>
+            }
         </div>
-}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
