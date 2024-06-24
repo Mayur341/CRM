@@ -122,25 +122,27 @@ namespace CRM.Controllers // Adjust namespace as per your application structure
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string roleName)
+        public async Task<IActionResult> CreateRole(string roleName)
         {
             if (string.IsNullOrWhiteSpace(roleName))
             {
-                ModelState.AddModelError(string.Empty, "Role name cannot be empty.");
-                return View();
+                TempData["ErrorMessage"] = "Role name cannot be empty.";
+                return RedirectToAction(nameof(Index));
             }
 
             var result = await _roleService.CreateRole(roleName);
             if (result)
             {
-                return RedirectToAction(nameof(Index));
+                TempData["SuccessMessage"] = $"Role '{roleName}' created successfully.";
             }
             else
             {
-                ModelState.AddModelError(string.Empty, $"Failed to create role '{roleName}'. Role already exists.");
-                return View();
+                TempData["ErrorMessage"] = $"Failed to create role '{roleName}'. Role already exists.";
             }
+
+            return RedirectToAction(nameof(Index));
         }
+
 
         // Action to delete a role
         [HttpPost]

@@ -33,6 +33,8 @@ namespace CRM.Services
         // Create a new role
         public async Task<bool> CreateRole(string roleName)
         {
+            roleName = roleName.ToUpper();
+
             if (await _roleManager.RoleExistsAsync(roleName))
                 return false;
 

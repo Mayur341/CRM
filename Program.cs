@@ -12,27 +12,45 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.AspNetCore.Identity;
 using CRM.Services;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 // Configure ApplicationDbContext
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+builder.Services.AddDbContext<ApplicationDbContext>((serviceProvider, options) =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection"));
+    var interceptor = serviceProvider.GetRequiredService<CustomSaveChangesInterceptor>();
+    options.AddInterceptors(interceptor);
+});
+
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Configure CRMContext
-builder.Services.AddDbContext<CRMContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+builder.Services.AddDbContext<CRMContext>((serviceProvider, options) =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection"));
+    var interceptor = serviceProvider.GetRequiredService<CustomSaveChangesInterceptor>();
+    options.AddInterceptors(interceptor);
+});
+
+builder.Services.AddScoped<CustomSaveChangesInterceptor>();
+
 
 
 builder.Services.AddScoped<RoleService>();
 
+
+// Register the synchronization services
+builder.Services.AddScoped<UserSynchronizationService>();
+builder.Services.AddSingleton<IHostedService, UserSynchronizationHostedService>();
 
 
 // Manually configure Rotativa

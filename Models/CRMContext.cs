@@ -4,8 +4,12 @@ namespace CRM.Models
 {
     public class CRMContext : DbContext
     {
-        public CRMContext(DbContextOptions<CRMContext> options) : base(options)
+        private readonly CustomSaveChangesInterceptor _saveChangesInterceptor;
+
+        public CRMContext(DbContextOptions<CRMContext> options, CustomSaveChangesInterceptor saveChangesInterceptor)
+            : base(options)
         {
+            _saveChangesInterceptor = saveChangesInterceptor;
         }
 
         public DbSet<User> Users { get; set; }
@@ -19,7 +23,7 @@ namespace CRM.Models
         public DbSet<Source> Sources { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Deal> Deals { get; set; }
-        public DbSet<ClientActivity> ClientActivities { get; set; } // Add DbSet for Activity
+        public DbSet<ClientActivity> ClientActivities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,22 +47,20 @@ namespace CRM.Models
                 .WithMany(d => d.Transactions)
                 .HasForeignKey(t => t.deal_id);
 
-            // Configure one-to-many relationship between Client and Activity
             modelBuilder.Entity<Client>()
                 .HasMany(c => c.ClientActivity)
                 .WithOne(a => a.Client)
-                .HasForeignKey(a => a.ClientID); // Assuming Activity has a property ClientId
-
-
-
+                .HasForeignKey(a => a.ClientID);
 
             modelBuilder.Entity<Client>()
-               .HasOne(c => c.User)
-               .WithMany(u => u.Clients)
-               .HasForeignKey(c => c.UserId);
+                .HasOne(c => c.User)
+                .WithMany(u => u.Clients)
+                .HasForeignKey(c => c.UserId);
+        }
 
-
-
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.AddInterceptors(_saveChangesInterceptor);
         }
     }
 }
