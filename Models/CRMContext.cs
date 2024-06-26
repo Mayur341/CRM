@@ -4,15 +4,19 @@ namespace CRM.Models
 {
     public class CRMContext : DbContext
     {
-        private readonly CustomSaveChangesInterceptor _saveChangesInterceptor;
-
-        public CRMContext(DbContextOptions<CRMContext> options, CustomSaveChangesInterceptor saveChangesInterceptor)
+       
+        public bool IsUserInitiatedSave { get; set; } = false;
+        public CRMContext(DbContextOptions<CRMContext> options)
             : base(options)
         {
-            _saveChangesInterceptor = saveChangesInterceptor;
+           
         }
 
-        public DbSet<User> Users { get; set; }
+
+        
+    
+
+  public DbSet<User> Users { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<ClientStage> ClientStages { get; set; }
@@ -58,9 +62,6 @@ namespace CRM.Models
                 .HasForeignKey(c => c.UserId);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.AddInterceptors(_saveChangesInterceptor);
-        }
+      
     }
 }

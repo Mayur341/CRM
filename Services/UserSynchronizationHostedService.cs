@@ -18,7 +18,7 @@ public class UserSynchronizationHostedService : IHostedService, IDisposable
     public Task StartAsync(CancellationToken cancellationToken)
     {
         // Set the timer to execute the DoWork method immediately and then every 10 minutes
-        _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(10));
+        _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(15));
         Console.WriteLine("users periodic cycle done");
         return Task.CompletedTask;
     }
