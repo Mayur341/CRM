@@ -116,6 +116,7 @@ namespace CRM.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                     Console.WriteLine("login done");
                 {
+                    Console.WriteLine("============login done success==========");
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

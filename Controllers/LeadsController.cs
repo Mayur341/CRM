@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CRM.Controllers
 {
+    [Authorize]    
     
     public class LeadsController : Controller
     {
