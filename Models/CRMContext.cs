@@ -57,9 +57,11 @@ namespace CRM.Models
                 .HasForeignKey(a => a.ClientID);
 
             modelBuilder.Entity<Client>()
-                .HasOne(c => c.User)
-                .WithMany(u => u.Clients)
-                .HasForeignKey(c => c.UserId);
+           .HasOne(c => c.User)
+           .WithMany(u => u.Clients)
+           .HasForeignKey(c => c.UserId)
+           .OnDelete(DeleteBehavior.SetNull);
+
         }
 
       

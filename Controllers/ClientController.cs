@@ -40,6 +40,7 @@ namespace CRM.Controllers
                 return NotFound(); // Or handle the case when the client is not found
             }
 
+
             var salesRepresentatives = await _userManager.GetUsersInRoleAsync("CLERK");
 
             // Use ViewBag to pass client details and sales representatives to the view
@@ -95,6 +96,32 @@ namespace CRM.Controllers
         // GET: Client
         public async Task<IActionResult> Index()
         {
+
+            //for sales representative clients 
+            var user = await _userManager.GetUserAsync(User);
+            var isSalesRep = await _userManager.IsInRoleAsync(user, "SALES-REPRESENTATIVE");
+
+            IQueryable<Client> clientsQuery = _context.Clients
+                .Include(c => c.Source)
+                .Include(c => c.ClientStatus)
+                .Include(c => c.Address)
+                .Include(c => c.FinancialDetails)
+                .Include(c => c.Deal);
+
+            if (isSalesRep)
+            {
+                clientsQuery = clientsQuery.Where(c => c.UserId == user.Id);
+                var clients = await clientsQuery.ToListAsync();
+
+                return View(clients);
+
+            }
+
+
+
+
+
+
             var cRMContext = _context.Clients.Include(c => c.ClientStatus).Include(c => c.Source).Include(c => c.Address).Include(c => c.FinancialDetails).Include(c => c.Deal);
 
             // Fetch distinct ClientIDs from Addresses table
