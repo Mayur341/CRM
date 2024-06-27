@@ -1,5 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
 using System;
@@ -112,10 +114,12 @@ namespace CRM.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                Console.WriteLine("=========result=======",result.ToString);
+                Console.WriteLine("login in processing");
                 if (result.Succeeded)
-                    Console.WriteLine("login done");
                 {
+                    Console.WriteLine("logged in finally =================");
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
@@ -133,11 +137,11 @@ namespace CRM.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
-
             }
 
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
     }
 }

@@ -8,21 +8,86 @@ using Microsoft.EntityFrameworkCore;
 using CRM.Models;
 using Rotativa.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Humanizer;
 
 namespace CRM.Controllers
 {
+
+
+
     [Authorize]
     public class ClientController : Controller
     {
         private readonly CRMContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ClientController(CRMContext context)
+        public ClientController(CRMContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        //export to pdf
-      
+
+        [HttpGet]
+        public async Task<IActionResult> ManagerAssign(int id)
+        {
+
+
+            var client = await _context.Clients.FindAsync(id);
+            if (client == null)
+            {
+                return NotFound(); // Or handle the case when the client is not found
+            }
+
+            var salesRepresentatives = await _userManager.GetUsersInRoleAsync("CLERK");
+
+            // Use ViewBag to pass client details and sales representatives to the view
+            ViewBag.ClientId = client.ClientID;
+            ViewBag.ClientName = client.ClientName;
+            ViewBag.ClientEmail = client.Email;
+            ViewBag.SalesRepresentatives = salesRepresentatives.Select(user => new SelectListItem
+            {
+                Value = user.Id,
+                Text = user.UserName
+            }).ToList();
+           
+
+            return View();
+
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ManagerAssign(int clientId, string selectedSalesRepresentativeId)
+        {
+            // Perform the assignment logic here
+            // You can use clientId and selectedSalesRepresentativeId to update the database accordingly
+
+            // Example: Assign the sales representative to the client
+            var client = await _context.Clients.FindAsync(clientId);
+            if (client == null)
+            {
+                return NotFound(); // Handle the case when the client is not found
+            }
+
+            client.UserId = selectedSalesRepresentativeId;
+            _context.Update(client);
+            await _context.SaveChangesAsync();
+
+            // Redirect or return a view as needed
+            return RedirectToAction("Index"); // Or another appropriate action
+        }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -50,6 +115,12 @@ namespace CRM.Controllers
             {
                 return NotFound();
             }
+
+            var clientMain=await _context.Clients.FindAsync(id);
+
+
+            var user = await _userManager.FindByIdAsync(clientMain.UserId);
+            ViewBag.AssignedManager = user?.Email;
 
             var client = await _context.Clients
                 .Include(c => c.ClientStatus)
